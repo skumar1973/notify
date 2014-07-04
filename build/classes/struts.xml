@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="devMode" value="true" />
+	<package name="default" extends="tiles-default">
+
+		<action name="login" class="com.c2pi.notify.actions.LoginAction">
+			<result name="error">login.jsp</result>
+			<result name="input" type="tiles">login.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="team">
+			<result type="tiles">team.def</result>
+		</action>
+		<action name="manager">
+			<result type="tiles">manager.def</result>
+		</action>
+		<action name="admin">
+			<result type="tiles">admin.def</result>
+		</action>
+		<action name="logoff" class="com.c2pi.notify.actions.LogoffAction">
+			<result type="tiles">login.def</result>
+		</action>
+
+		<action name="role" class="com.c2pi.notify.actions.RoleAction">
+			<interceptor-ref name="defaultStack">
+				<param name="prepare.excludeMethods">role</param>
+			</interceptor-ref>
+
+			<result name="error">roleform.jsp</result>
+			<result name="input" type="tiles">role.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="roleform" class="com.c2pi.notify.actions.RoleAction"
+			method="getrolelist">
+			<interceptor-ref name="defaultStack">
+				<param name="validate.excludeMethods">roleform</param>
+			</interceptor-ref>
+			<result name="error">roleform.jsp</result>
+			<result name="input" type="tiles">role.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="taskfreq" class="com.c2pi.notify.actions.TaskFreqAction">
+			<interceptor-ref name="defaultStack">
+				<param name="prepare.excludeMethods">taskfreq</param>
+			</interceptor-ref>
+
+			<result name="error">taskfreqform.jsp</result>
+			<result name="input" type="tiles">taskfreq.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="taskfreqform" class="com.c2pi.notify.actions.TaskFreqAction"
+			method="gettflist">
+			<interceptor-ref name="defaultStack">
+				<param name="validate.excludeMethods">taskfreqform</param>
+			</interceptor-ref>
+			<result name="error">taskfreqform.jsp</result>
+			<result name="input" type="tiles">taskfreq.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="task" class="com.c2pi.notify.actions.TaskAction">
+			<interceptor-ref name="defaultStack">
+				<param name="prepare.excludeMethods">task</param>
+			</interceptor-ref>
+
+			<result name="error">taskform.jsp</result>
+			<result name="input" type="tiles">task.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="taskform" class="com.c2pi.notify.actions.TaskAction"
+			method="getFreqId">
+			<interceptor-ref name="defaultStack">
+				<param name="validate.excludeMethods">taskform</param>
+			</interceptor-ref>
+			<result name="error">taskform.jsp</result>
+			<result name="input" type="tiles">task.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="notifytask" class="com.c2pi.notify.actions.NotifyTaskAction">
+			<interceptor-ref name="defaultStack">
+				<param name="validate.excludeMethods">prepare</param>
+			</interceptor-ref>
+
+			<result name="error">notifytaskform.jsp</result>
+			<result name="input" type="tiles">notifytask.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="notifytaskform" class="com.c2pi.notify.actions.NotifyTaskAction"
+			method="getlist">
+			<interceptor-ref name="defaultStack">
+				<param name="prepare.excludeMethods">validate</param>
+			</interceptor-ref>
+
+			<result name="error">notifytaskform.jsp</result>
+			<result name="input" type="tiles">notifytask.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="employee" class="com.c2pi.notify.actions.EmployeeAction">
+			<interceptor-ref name="defaultStack">
+				<param name="prepare.excludeMethods">employee</param>
+			</interceptor-ref>
+
+			<result name="error">employeeform.jsp</result>
+			<result name="input" type="tiles">employee.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="employeeform" class="com.c2pi.notify.actions.EmployeeAction"
+			method="getemplist">
+			<interceptor-ref name="defaultStack">
+				<param name="validate.excludeMethods">employeeform</param>
+			</interceptor-ref>
+
+			<result name="error">employeeform.jsp</result>
+			<result name="input" type="tiles">employee.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+
+		<action name="projectemployees" class="com.c2pi.notify.actions.ProjectEmployeesAction">
+			<interceptor-ref name="defaultStack">
+				<param name="validate.excludeMethods">prepare</param>
+			</interceptor-ref>
+
+			<result name="error">projectemployeesform.jsp</result>
+			<result name="input" type="tiles">projectemployees.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="projectemployeesform" class="com.c2pi.notify.actions.ProjectEmployeesAction"
+			method="getprjemplist">
+			<interceptor-ref name="defaultStack">
+				<param name="prepare.excludeMethods">validate</param>
+			</interceptor-ref>
+
+			<result name="error">projectemployeesform.jsp</result>
+			<result name="input" type="tiles">projectemployees.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+		<action name="employeestasks" class="com.c2pi.notify.actions.EmployeesTasksAction">
+			<interceptor-ref name="defaultStack">
+				<param name="validate.excludeMethods">prepare</param>
+			</interceptor-ref>
+
+			<result name="error">employeestasksform.jsp</result>
+			<result name="input" type="tiles">employeestasks.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="employeestasksform" class="com.c2pi.notify.actions.EmployeesTasksAction"
+			method="getemptaskslist">
+			<interceptor-ref name="defaultStack">
+				<param name="prepare.excludeMethods">validate</param>
+			</interceptor-ref>
+
+			<result name="error">employeestasksform.jsp</result>
+			<result name="input" type="tiles">employeestasks.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+		<!-- Projects start -->
+		<action name="projectshow" class="com.c2pi.notify.actions.ProjectsAction"
+			method="showProjects">
+			<result name="error">projectsform.jsp</result>
+			<result name="input" type="tiles">projects.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="projects" class="com.c2pi.notify.actions.ProjectsAction">
+			<result name="error">projectsform.jsp</result>
+			<result name="input" type="tiles">project.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+		<!-- Projects end -->
+
+		<action name="userform" class="com.c2pi.notify.actions.UserAction"
+			method="getuserlist">
+			<result name="error">userform.jsp</result>
+			<result name="input" type="tiles">user.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="user" class="com.c2pi.notify.actions.UserAction">
+			<result name="error">userform.jsp</result>
+			<result name="input" type="tiles">user.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="employeeroleform" class="com.c2pi.notify.actions.EmployeeRoleAction"
+			method="getEmpNRole">
+			<interceptor-ref name="defaultStack">
+				<param name="validate.excludeMethods">employeeroleform</param>
+			</interceptor-ref>
+			<result name="error">employeeroleform.jsp</result>
+			<result name="input" type="tiles">employeerole.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="employeerole" class="com.c2pi.notify.actions.EmployeeRoleAction">
+			<interceptor-ref name="defaultStack">
+				<param name="validate.excludeMethods">employeerole</param>
+			</interceptor-ref>
+			<result name="error">employeeroleform.jsp</result>
+			<result name="input" type="tiles">employeerole.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="menuform" class="com.c2pi.notify.actions.MenuAction"
+			method="getmenulist">
+			<interceptor-ref name="defaultStack">
+				<param name="validate.excludeMethods">menuform</param>
+			</interceptor-ref>
+			<result name="error">menuform.jsp</result>
+			<result name="input" type="tiles">menu.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+		<action name="menu" class="com.c2pi.notify.actions.MenuAction">
+			<interceptor-ref name="defaultStack">
+				<param name="validate.excludeMethods">menu</param>
+			</interceptor-ref>
+			<result name="error">menuform.jsp</result>
+			<result name="input" type="tiles">menu.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			<result name="manager" type="tiles">manager.welcome.def</result>
+			<result name="team" type="tiles">team.welcome.def</result>
+		</action>
+
+	</package>
+</struts> 
