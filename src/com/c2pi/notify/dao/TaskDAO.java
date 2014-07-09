@@ -4,34 +4,36 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Map;
 
-import com.c2pi.notify.entity.TaskFrequencies;
-import com.c2pi.notify.entity.Tasks;
+import com.c2pi.notify.entity.Task;
+import com.c2pi.notify.entity.TaskFrequency;
 
 public class TaskDAO {
 
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	String query = "";
+	int res = 0;
+	DBConn con = null;
 
-	public String addTask(String name, String desc, String status, int freq_id,
-			String created_by) throws SQLException {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-
-		String query = "Insert Into `c2pidb`.`Tasks` (`name`,`desc`,`status`,`freq_id`,`created_by`) values(?,?,?,?,?)";
-		int res = 0;
-		DBConn con = new DBConn();
+	public String addTask(Task task) throws SQLException {
+		query = "Insert Into `c2pidb`.`Tasks` (`name`,`desc`,`status`,`freq_id`,`created_by`,`created_dt`,`Updated_by`,`Updated_dt`) values(?,?,?,?,?,?,?,?)";
+		con = new DBConn();
 
 		try {
 			conn = con.getConn();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, name);
-			pstmt.setString(2, desc);
-			pstmt.setString(3, status);
-			pstmt.setInt(4, freq_id);
-			pstmt.setString(5,created_by);
-			System.out.println("query:" + query);
+			pstmt.setString(1, task.getName());
+			pstmt.setString(2, task.getDesc());
+			pstmt.setString(3, task.getStatus());
+			pstmt.setInt(4, task.getFreqID());
+			pstmt.setString(5, task.getCreatedBy());
+			pstmt.setString(6, task.getCreatedDt());
+			pstmt.setString(7, task.getUpdatedBy());
+			pstmt.setString(8, task.getUpdatedDt());
+			System.out.println("pstmt:" + pstmt);
 			res = pstmt.executeUpdate();
 			System.out.println("res=" + res);
 		} catch (SQLException e) {
@@ -47,92 +49,68 @@ public class TaskDAO {
 		return (res + "- Task added.");
 	}
 
-	public ArrayList<TaskFrequencies> getFreqId() throws SQLException {
+	public ArrayList<TaskFrequency> getTaskFreqId() throws SQLException {
 
-		ArrayList<TaskFrequencies> tflist = new ArrayList<TaskFrequencies>();
-		Connection conn = null;
-		Statement stmt = null;
-		String query = "";
-
-		DBConn con = new DBConn();
-		ResultSet rs = null;
+		ArrayList<TaskFrequency> taskfreqList = new ArrayList<TaskFrequency>();
+		TaskFrequency tf = null;
+		con = new DBConn();
 		try {
 			conn = con.getConn();
-			stmt = conn.createStatement();
 			query = "Select `id`,`name` from `c2pidb`.`Task_frequencies`";
-
-			System.out.println("query:" + query);
-			rs = stmt.executeQuery(query);
+			pstmt = conn.prepareStatement(query);
+			System.out.println("pstmt:" + pstmt);
+			rs = pstmt.executeQuery();
 			System.out.println("res=" + rs);
-
 			while (rs.next()) {
-				TaskFrequencies tf = new TaskFrequencies();
+				tf = new TaskFrequency();
 				tf.setId(rs.getInt("id"));
 				tf.setName(rs.getString("name"));
-
-				tflist.add(tf);
-
+				taskfreqList.add(tf);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (stmt != null)
-				stmt.close();
+			if (pstmt != null)
+				pstmt.close();
 			if (conn != null)
 				conn.close();
 		}
 
-		return tflist;
+		return taskfreqList;
 	}
 
-	public ArrayList<Tasks> gettaskslist(){
-		ArrayList<Tasks> tslist = new ArrayList<Tasks>();
-		Connection conn = null;
-		PreparedStatement pstmt =null;
-		String query="SELECT `id`, `name`,`desc`,`status`, `freq_id`, `created_dt`,`created_by`, `updated_dt`,`updated_by` FROM `c2pidb`.`tasks`";
-		DBConn con = new DBConn();
-		ResultSet rs =null;
+	public ArrayList<Task> getTaskList() throws SQLException {
+		ArrayList<Task> tsList = new ArrayList<Task>();
+		Task ts = null;
+		query = "SELECT `id`, `name`,`desc`,`status`, `freq_id`, `created_dt`,`created_by`, `updated_dt`,`updated_by` FROM `c2pidb`.`tasks`";
+		con = new DBConn();
 		conn = con.getConn();
 		try {
-			pstmt=conn.prepareStatement(query);
-			rs=pstmt.executeQuery();
-			System.out.println("query"+query);
-			while (rs.next()){
-				Tasks ts = new Tasks();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			System.out.println("query" + query);
+			while (rs.next()) {
+				ts = new Task();
 				ts.setId(rs.getInt("id"));
 				ts.setName(rs.getString("name"));
 				ts.setDesc(rs.getString("desc"));
 				ts.setStatus(rs.getString("status"));
-				ts.setFreq_id(rs.getInt("freq_id"));
-				ts.setCreated_dt(rs.getString("created_dt"));
-				ts.setCreated_by(rs.getString("created_by"));
-				ts.setUpdated_dt(rs.getString("updated_dt"));
-				ts.setUpdated_by(rs.getString("updated_by"));
-				tslist.add(ts);
+				ts.setFreqID(rs.getInt("freq_id"));
+				ts.setCreatedDt(rs.getString("created_dt"));
+				ts.setCreatedBy(rs.getString("created_by"));
+				ts.setUpdatedDt(rs.getString("updated_dt"));
+				ts.setUpdatedBy(rs.getString("updated_by"));
+				tsList.add(ts);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			if (pstmt != null){
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if (conn !=null){
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			if (pstmt != null) pstmt.close();
+			if (conn != null) conn.close();
 		}
 
-		return tslist;
+		return tsList;
 	}
 }

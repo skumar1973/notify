@@ -10,10 +10,10 @@
 	<table width="100%" align="center" cellpadding="0">
 		<tr>
 			<td><s:actionerror /> <s:form action="employee" method="post">
-					<s:textfield name="firstname" key="app.employee.firstname" />
-					<s:textfield name="lastname" key="app.employee.lastname" />
+					<s:textfield name="firstName" key="app.employee.firstName" />
+					<s:textfield name="lastName" key="app.employee.lastName" />
 					<s:textfield name="email" key="app.employee.email" />
-					<s:textfield name="design" key="app.employee.designation" />
+					<s:textfield name="designation" key="app.employee.designation" />
 					<s:textfield name="status" key="app.employee.status" />
 					<s:submit value="Add Employee" />
 					<table width="100%" align="center" style="border: 1px solid black;">
@@ -28,18 +28,18 @@
 							<td>Updated Date</td>
 							<td>Updated By</td>
 						</tr>
-						<s:iterator id="ls" value="emplist">
+						<s:iterator id="ls" value="empList">
 							<tr>
 								<td><s:property value="id" /></td>
-								<td><s:property value="first_name" /> <s:property
-										value="last_name" /></td>
+								<td><s:property value="firstName" /> <s:property
+										value="lastName" /></td>
 								<td><s:property value="email" /></td>
 								<td><s:property value="designation" /></td>
 								<td><s:property value="status" /></td>
-								<td><s:property value="created_dt" /></td>
-								<td><s:property value="created_by" /></td>
-								<td><s:property value="updated_dt" /></td>
-								<td><s:property value="updated_by" /></td>
+								<td><s:property value="createdDt" /></td>
+								<td><s:property value="createdBy" /></td>
+								<td><s:property value="updatedDt" /></td>
+								<td><s:property value="updatedBy" /></td>
 							</tr>
 						</s:iterator>
 					</table>

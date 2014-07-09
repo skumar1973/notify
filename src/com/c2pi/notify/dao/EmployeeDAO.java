@@ -6,32 +6,36 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
-import com.c2pi.notify.entity.Employees;
+import com.c2pi.notify.entity.Employee;
 
 public class EmployeeDAO {
 
-	public String addEmployee(String firstname, String lastname, String email,
-			String design, String status, String created_by)
-			throws SQLException {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		String query = "insert into Employees(first_name, last_name, email, designation, status, created_by) values(?,?,?,?,?,?)";
-		int res = 0;
-		DBConn con = new DBConn();
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+	private String query = "";
+	private int queryResult = 0;
+	private DBConn con = null;
+	private ResultSet rs = null;
+	private ArrayList<Employee> empList = null;
+
+	public String addEmployee(Employee employee) throws SQLException {
+		query = "insert into Employees(first_name, last_name, email, designation, status, created_by, created_dt, updated_by, updated_dt ) values(?,?,?,?,?,?,?,?,?)";
+		con = new DBConn();
 
 		try {
 			conn = con.getConn();
 			pstmt = conn.prepareStatement(query);
-
-			pstmt.setString(1, firstname);
-			pstmt.setString(2, lastname);
-			pstmt.setString(3, email);
-			pstmt.setString(4, design);
-			pstmt.setString(5, status);
-			pstmt.setString(6, created_by);
-			System.out.println("pstmt"+pstmt);
-			res = pstmt.executeUpdate();
-
+			pstmt.setString(1, employee.getFirstName());
+			pstmt.setString(2, employee.getLastName());
+			pstmt.setString(3, employee.getEmail());
+			pstmt.setString(4, employee.getDesignation());
+			pstmt.setString(5, employee.getStatus());
+			pstmt.setString(6, employee.getCreatedBy());
+			pstmt.setString(7, employee.getCreatedDt());
+			pstmt.setString(8, employee.getUpdatedBy());
+			pstmt.setString(9, employee.getUpdatedDt());
+			System.out.println("pstmt" + pstmt);
+			queryResult = pstmt.executeUpdate();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,54 +46,44 @@ public class EmployeeDAO {
 				conn.close();
 		}
 
-		return (res + "- employee added.");
+		return (queryResult + "- employee added.");
 
 	}
-	public ArrayList<Employees> getemplist(){
-		ArrayList<Employees> emplist = new ArrayList<Employees>();
-		Connection conn=null;
-		PreparedStatement pstmt = null;
-		ResultSet rs=null;
-		DBConn con = new DBConn();
-		conn=con.getConn();
-		String query="select id, first_name, last_name, email, designation, status, created_dt, created_by, updated_dt, updated_by from c2pidb.employees";
+
+	public ArrayList<Employee> getEmpList() throws SQLException {
+		empList = new ArrayList<Employee>();
+		con = new DBConn();
+		conn = con.getConn();
+		query = "select id, first_name, last_name, email, designation, status, created_dt, created_by, updated_dt, updated_by from c2pidb.employees";
 		try {
-			pstmt=conn.prepareStatement(query);
-			rs=pstmt.executeQuery();
-			while (rs.next()){
-				Employees emp = new Employees();
+			pstmt = conn.prepareStatement(query);
+			System.out.println("pstmt:"+pstmt);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Employee emp = new Employee();
 				emp.setId(rs.getInt("id"));
-				emp.setFirst_name(rs.getString("first_name"));
-				emp.setLast_name(rs.getString("last_name"));
+				emp.setFirstName(rs.getString("first_name"));
+				emp.setLastName(rs.getString("last_name"));
 				emp.setEmail(rs.getString("email"));
 				emp.setDesignation(rs.getString("designation"));
 				emp.setStatus(rs.getString("status"));
-				emp.setCreated_dt(rs.getString("created_dt"));
-				emp.setCreated_by(rs.getString("created_by"));
-				emp.setUpdated_dt(rs.getString("updated_dt"));
-				emp.setUpdated_by(rs.getString("updated_by"));
-				emplist.add(emp);
+				emp.setCreatedDt(rs.getString("created_dt"));
+				emp.setCreatedBy(rs.getString("created_by"));
+				emp.setUpdatedBy(rs.getString("updated_dt"));
+				emp.setUpdatedBy(rs.getString("updated_by"));
+				empList.add(emp);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {if (pstmt!=null)
-			try {
+		} finally {
+			if (pstmt != null)
 				pstmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		if (conn != null)
-			try {
+			if (conn != null)
 				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
 		}
-		
-		
-		return emplist;
+
+		return empList;
 	}
 }

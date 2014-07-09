@@ -14,32 +14,34 @@
 			<td><s:actionerror /> <s:form action="projects" method="post">
 					<s:textfield name="name" key="app.projects.name" />
 					<s:textfield name="desc" key="app.projects.desc" />
-					<s:textfield name="mgr_id" key="app.projects.mgr_id" />
-					<s:textfield name="status" key="app.projects.status"  />		
+					<s:select name="mgrID" list="empList" listKey="id"
+						listValue="firstName" headerKey="0" headerValue="Select" key="app.projects.mgr_id" />
+					<s:textfield name="status" key="app.projects.status" />
 					<s:submit value="Add Projects" />
-				
-		
-		<table width="100%" align="center" style="border:1px solid black;">
-						<tr >
-							<td >Id</td>
-							<td >Name</td>
-							<td >Description</td>
-							<td >Manager ID</td>
-							<td >Status</td>
-							<td >Created By</td>
+
+
+					<table width="100%" align="center" style="border: 1px solid black;">
+						<tr>
+							<td>Id</td>
+							<td>Name</td>
+							<td>Description</td>
+							<td>Manager ID</td>
+							<td>Status</td>
+							<td>Created By</td>
 						</tr>
-						<s:iterator id="projects" value="prlist">
-							<tr >
-								<td ><s:property value="id" /></td>
-								<td ><s:property value="name" /></td>
-								<td ><s:property value="desc" /></td>
-								<td ><s:property value="mgr_id" /></td>
-								<td ><s:property value="status" /></td>
-								<td ><s:property value="created_by" /></td>
+						<s:iterator id="projects" value="projList">
+							<tr>
+								<td><s:property value="id" /></td>
+								<td><s:property value="name" /></td>
+								<td><s:property value="desc" /></td>
+								<td><s:property value="mgrID" /></td>
+								<td><s:property value="status" /></td>
+								<td><s:property value="createdBy" /></td>
 							</tr>
 						</s:iterator>
 					</table>
-		</s:form></td></tr>
+				</s:form></td>
+		</tr>
 	</table>
 </body>
 </html>

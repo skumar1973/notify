@@ -3,60 +3,60 @@ package com.c2pi.notify.entity;
 public class EmployeesTaskNotification {
 
 	private int id;
-	private int emp_id;
-	private int task_id; 
-	private String period_date;
-	private String created_by;
-	private String created_dt;
-	private String updated_by;
-	private String updated_dt;
+	private int empID;
+	private int taskID; 
+	private String periodDate;
+	private String createdBy;
+	private String createdDt;
+	private String updatedBy;
+	private String updatedDt;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getEmp_id() {
-		return emp_id;
+	public int getEmpID() {
+		return empID;
 	}
-	public void setEmp_id(int emp_id) {
-		this.emp_id = emp_id;
+	public void setEmpID(int empID) {
+		this.empID = empID;
 	}
-	public int getTask_id() {
-		return task_id;
+	public int getTaskID() {
+		return taskID;
 	}
-	public void setTask_id(int task_id) {
-		this.task_id = task_id;
+	public void setTaskID(int taskID) {
+		this.taskID = taskID;
 	}
-	public String getPeriod_date() {
-		return period_date;
+	public String getPeriodDate() {
+		return periodDate;
 	}
-	public void setPeriod_date(String period_date) {
-		this.period_date = period_date;
+	public void setPeriodDate(String periodDate) {
+		this.periodDate = periodDate;
 	}
-	public String getCreated_by() {
-		return created_by;
+	public String getCreatedBy() {
+		return createdBy;
 	}
-	public void setCreated_by(String created_by) {
-		this.created_by = created_by;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
-	public String getCreated_dt() {
-		return created_dt;
+	public String getCreatedDt() {
+		return createdDt;
 	}
-	public void setCreated_dt(String created_dt) {
-		this.created_dt = created_dt;
+	public void setCreatedDt(String createdDt) {
+		this.createdDt = createdDt;
 	}
-	public String getUpdated_by() {
-		return updated_by;
+	public String getUpdatedBy() {
+		return updatedBy;
 	}
-	public void setUpdated_by(String updated_by) {
-		this.updated_by = updated_by;
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
 	}
-	public String getUpdated_dt() {
-		return updated_dt;
+	public String getUpdatedDt() {
+		return updatedDt;
 	}
-	public void setUpdated_dt(String updated_dt) {
-		this.updated_dt = updated_dt;
+	public void setUpdatedDt(String updatedDt) {
+		this.updatedDt = updatedDt;
 	}
 
 }

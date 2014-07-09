@@ -4,36 +4,39 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.c2pi.notify.dao.TaskFreqDAO;
-import com.c2pi.notify.entity.TaskFrequencies;
+import com.c2pi.notify.entity.TaskFrequency;
 
 public class TaskFreqManager {
+	
+	TaskFreqDAO tfdao = null;
+	
+//	public String AddTaskFreq(String name, String desc, String status, String createdBy) {
+	public String AddTaskFreq(TaskFrequency taskFreq) {		
+		String tfdaores = "";
 
-	public String AddTaskFreq(String name, String desc, String status,
-			String created_by) {
-		String taskfreqdaores = "";
-
-		TaskFreqDAO taskfreqdao = new TaskFreqDAO();
+		tfdao = new TaskFreqDAO();
 		try {
 			System.out.println("TaskFreq dao addTaskFreq method...");
-			taskfreqdaores = taskfreqdao.addTaskFreq(name, desc, status,
-					created_by);
+//			tfdaores = tfdao.addTaskFreq(name, desc, status,
+//					createdBy);
+			tfdaores = tfdao.addTaskFreq(taskFreq);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return taskfreqdaores;
+		return tfdaores;
 	}
 
-	public ArrayList<TaskFrequencies> gettflist() {
+	public ArrayList<TaskFrequency> getTaskFreqList() throws SQLException {
 		System.out.println("TaskFreqManager gettflist method..");
-		ArrayList<TaskFrequencies> tflist = new ArrayList<TaskFrequencies>();
-		TaskFreqDAO tfdao = new TaskFreqDAO();
+		ArrayList<TaskFrequency> tfList = null;
+		tfdao = new TaskFreqDAO();
 
-		tflist = tfdao.gettflist();
-		System.out.println("tflist" + tflist);
+		tfList = tfdao.getTaskFreqList();
+		System.out.println("tflist" + tfList);
 
-		return tflist;
+		return tfList;
 
 	}
 

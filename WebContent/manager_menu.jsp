@@ -10,16 +10,16 @@
 <body>
 
 	<table width="100%">
+<!-- 		<tr> -->
+<%-- 			<td align="left" style="border-bottom: 2px solid green;"><s:property --%>
+<%-- 					value="#session.loginID" /></td> --%>
+<%-- 			<td align="left"> <s:property value="#session.role"/> </td> --%>
+<!-- 		</tr> -->
 		<tr>
-			<td align="left" style="border-bottom: 2px solid green;"><s:property
-					value="#session.loginid" /></td>
-			<td align="left"> <s:property value="#session.role"/> </td>
+			<td align="left"><a href="employeestasksform.action"> Employee's Task</a></td>
 		</tr>
 		<tr>
-			<td align="left"><a href="employeestasksform.action">Employees Tasks</a></td>
-		</tr>
-		<tr>
-			<td align="left"><a href="projectemployeesform.action">Project Employees</a></td>
+			<td align="left"><a href="projectemployeesform.action">Project's Employee</a></td>
 		</tr>
 		<tr>
 			<td align="left"><a href="logoff.action">Logoff</a></td>

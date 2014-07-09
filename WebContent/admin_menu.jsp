@@ -10,11 +10,11 @@
 <body>
 
 	<table width="100%">
-		<tr>
-			<td align="left" style="border-bottom: 2px solid green;"><s:property
-					value="#session.loginid" /></td>
-			<td align="left"> <s:property value="#session.role"/> </td>
-		</tr>
+<!-- 		<tr> -->
+<%-- 			<td align="left" style="border-bottom: 2px solid green;"><s:property --%>
+<%-- 					value="#session.loginID" /></td> --%>
+<%-- 			<td align="left"> <s:property value="#session.role"/> </td> --%>
+<!-- 		</tr> -->
 		<tr>
 			<td align="left"><a href="employeeform.action">Employees</a></td>
 		</tr>
@@ -25,7 +25,7 @@
 			<td align="left"><a href="roleform.action">Roles</a></td>
 		</tr>
 		<tr>
-			<td align="left"><a href="projectshow.action">Projects</a></td>
+			<td align="left"><a href="projectform.action">Projects</a></td>
 		</tr>
 		<tr>
 			<td align="left"><a href="taskform.action">Tasks</a></td>

@@ -4,24 +4,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.c2pi.notify.dao.MenuDAO;
-import com.c2pi.notify.entity.Menus;
+import com.c2pi.notify.entity.Menu;
 
 public class MenuManager {
-
-	public String addMenu(String name, int parent_id, String desc,
-			String status, String target, String created_by)
+	
+	MenuDAO mdao = null;
+	
+	public String addMenu(String name, int parentID, String desc,
+			String status, String target, String createdBy)
 			throws SQLException {
-		MenuDAO mdao = new MenuDAO();
+		mdao = new MenuDAO();
 		String res = "";
-		res = mdao.addMenu(name, parent_id, desc, status, target, created_by);
+		res = mdao.addMenu(name, parentID, desc, status, target, createdBy);
 		return res;
 	}
 
-	public ArrayList<Menus> getmenulist() {
-		ArrayList<Menus> menulist = null;
-		MenuDAO mdao = new MenuDAO();
-		menulist = mdao.getmenulist();
+	public ArrayList<Menu> getMenuList() throws SQLException {
+		ArrayList<Menu> menuList = null;
+		mdao = new MenuDAO();
+		menuList = mdao.getMenuList();
 
-		return menulist;
+		return menuList;
 	}
 }

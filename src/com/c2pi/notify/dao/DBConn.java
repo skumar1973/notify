@@ -22,11 +22,11 @@ public class DBConn {
 					.getResourceAsStream(propFileName);
 			prop.load(inputStream);
 			url = prop.getProperty("app.database.URL");
-			System.out.println("url :  " + url);
+			System.out.println("url:" + url);
 			user_name = prop.getProperty("app.database.username");
-			System.out.println("user_name  :" + user_name);
+			System.out.println("user_name:" + user_name);
 			user_password = prop.getProperty("app.database.password");
-			System.out.println("user_password  :" + user_password);
+			System.out.println("user_password:" + user_password);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 

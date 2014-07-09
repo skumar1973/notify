@@ -11,7 +11,7 @@
 		<tr>
 			<td><s:actionerror /> <s:form action="menu" method="post">
 					<s:textfield name="name" key="app.menu.name" />
-					<s:textfield name="parent_id" key="app.menu.parent_id" />
+					<s:textfield name="parentID" key="app.menu.parent_id" />
 					<s:textfield name="desc" key="app.menu.desc" />
 					<s:textfield name="status" key="app.menu.status" />
 					<s:textfield name="target" key="app.menu.target" />
@@ -29,18 +29,18 @@
 							<td>Updated Date</td>
 							<td>Updated By</td>
 						</tr>
-						<s:iterator id="ls" value="menulist">
+						<s:iterator id="ls" value="mnList">
 							<tr>
 								<td><s:property value="id" /></td>
 								<td><s:property value="name" /></td>
-								<td><s:property value="parent_id" /></td>
+								<td><s:property value="parentID" /></td>
 								<td><s:property value="desc" /></td>
 								<td><s:property value="status" /></td>
 								<td><s:property value="target" /></td>
-								<td><s:property value="created_dt" /></td>
-								<td><s:property value="created_by" /></td>
-								<td><s:property value="updated_dt" /></td>
-								<td><s:property value="updated_by" /></td>
+								<td><s:property value="createdDt" /></td>
+								<td><s:property value="createdBy" /></td>
+								<td><s:property value="updatedDt" /></td>
+								<td><s:property value="updatedBy" /></td>
 							</tr>
 						</s:iterator>
 					</table>

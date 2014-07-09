@@ -12,12 +12,12 @@
 	<table width="100%" align="center" >
 		<tr>
 			<td><s:actionerror /> <s:form action="employeerole" method="post">
-					<s:select name="emp_id" list="empIDList" listKey="id"
-						listValue="first_name" headerKey="0" headerValue="Select"
-						key="app.employeerole.emp_id" />
-					<s:select name="role_id" list="roleIDList" listKey="id"
+					<s:select name="empID" list="empIDList" listKey="id"
+						listValue="firstName" headerKey="0" headerValue="Select"
+						key="app.employeeRole.empID" />
+					<s:select name="roleID" list="roleIDList" listKey="id"
 						listValue="name" headerKey="0" headerValue="Select"
-						key="app.employeerole.role_id" />
+						key="app.employeeRole.roleID" />
 					<s:submit value="Add Employee Role" />
 				<table width="100%" align="center" style="border:1px solid black;">
 						<tr >
@@ -29,15 +29,15 @@
 							<td >Updated Date</td>
 							<td >Updated By</td>							
 						</tr>
-						<s:iterator id="ls" value="emproleList">
+						<s:iterator id="ls" value="empRoleList">
 							<tr >
 								<td ><s:property value="id" /></td>
-								<td ><s:property value="emp_id" /></td>
-								<td ><s:property value="role_id" /></td>
-								<td ><s:property value="created_dt" /></td>
-								<td ><s:property value="created_by" /></td>
-								<td ><s:property value="updated_dt" /></td>
-								<td ><s:property value="updated_by" /></td>
+								<td ><s:property value="empID" /></td>
+								<td ><s:property value="roleID" /></td>
+								<td ><s:property value="createdDt" /></td>
+								<td ><s:property value="createdBy" /></td>
+								<td ><s:property value="updatedDt" /></td>
+								<td ><s:property value="updatedBy" /></td>
 							</tr>
 						</s:iterator>
 					</table>

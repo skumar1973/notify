@@ -15,12 +15,12 @@
 			<td><s:actionerror /> <s:form action="projectemployees"
 					method="post">
 					
-					<s:select name="proj_id" list="projlist" listKey="id"
+					<s:select name="projID" list="projList" listKey="id"
 						listValue="name" headerKey="0" headerValue="Select"
 						key="app.projectemployees.proj_id" />
 						
-					<s:select name="emp_id" list="emplist" listKey="id"
-						listValue="first_name" headerKey="0" headerValue="Select"
+					<s:select name="empID" list="empList" listKey="id"
+						listValue="firstName" headerKey="0" headerValue="Select"
 						key="app.projectemployees.emp_id" />
 						
 					<s:submit value="Add Project Employees" />
@@ -35,15 +35,15 @@
 							<td>Updated Date</td>
 							<td>Updated By</td>
 						</tr>
-						<s:iterator id="ls" value="prjemplist">
+						<s:iterator id="ls" value="projEmpList">
 							<tr>
 								<td><s:property value="id" /></td>
-								<td><s:property value="proj_id" /></td>
-								<td><s:property value="emp_id" /></td>
-								<td><s:property value="created_dt" /></td>
-								<td><s:property value="created_by" /></td>
-								<td><s:property value="updated_dt" /></td>
-								<td><s:property value="updated_by" /></td>
+								<td><s:property value="projID" /></td>
+								<td><s:property value="empID" /></td>
+								<td><s:property value="createdDt" /></td>
+								<td><s:property value="createdBy" /></td>
+								<td><s:property value="updatedDt" /></td>
+								<td><s:property value="updatedBy" /></td>
 							</tr>
 						</s:iterator>
 					</table>

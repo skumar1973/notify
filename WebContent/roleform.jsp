@@ -34,10 +34,10 @@
 								<td><s:property value="name" /></td>
 								<td><s:property value="desc" /></td>
 								<td><s:property value="status" /></td>
-								<td><s:property value="created_dt" /></td>
-								<td><s:property value="created_by" /></td>
-								<td><s:property value="updated_dt" /></td>
-								<td><s:property value="updated_by" /></td>
+								<td><s:property value="createdDt" /></td>
+								<td><s:property value="createdBy" /></td>
+								<td><s:property value="updatedDt" /></td>
+								<td><s:property value="updatedBy" /></td>
 							</tr>
 						</s:iterator>
 					</table>

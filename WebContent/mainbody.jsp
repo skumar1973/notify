@@ -9,9 +9,14 @@
 <table  width="100%" align="center" cellpadding="10">
 <tr>
 <td>
-<h2 align="center" style="font-family:Book Antiqua">Click Login link</h2>
+<h2 align="left" style="font-family:Book Antiqua">Click on Login</h2>
 <p align="justify">
-  Help to send email to notify tasks completion...  
+
+  APP will help do the following: <br>
+  -> Admin user will do setup by adding new employee, user, task, project etc. <br>
+  -> Manager user will add new employee to project and assign task to employee. <br>
+  -> Team member will notify about completed task to manager using Notify Tasks <br>
+
 </p>
 </td></tr>
 </table>

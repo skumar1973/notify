@@ -1,19 +1,21 @@
 package com.c2pi.notify.service;
 
+import java.sql.SQLException;
+
 import com.c2pi.notify.dao.LoginDAO;
 
 public class LoginManager {
-
-	public int IsLoginCorrect(String loginid, String password){
+	LoginDAO udao = null;
+	public int IsLoginCorrect(String loginID, String password) throws SQLException{
 		int emp_id=0;
-		LoginDAO udao = new LoginDAO();
-		emp_id=udao.IsLoginCorrect(loginid, password);
+		udao = new LoginDAO();
+		emp_id=udao.IsLoginCorrect(loginID, password);
 		return emp_id;
 	}
-	public String getUserRole(String loginid){
+	public String getUserRole(String loginID) throws SQLException{
 		String res="";
-		LoginDAO udao = new LoginDAO();
-		res=udao.getUserRole(loginid);
+		udao = new LoginDAO();
+		res=udao.getUserRole(loginID);
 		return res;
 	}
 }

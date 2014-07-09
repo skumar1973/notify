@@ -9,7 +9,7 @@
 <body>
 	<table align="center" width="100%">	
 		<tr>
-			<td> Click on Menu Option to perform action.. </td>
+			<td> <h3> Click on Menu Option to perform action.. </h3> </td> 
 		</tr>
 		<tr> <td> <s:property value="#session.result" /> </td> 
 		</tr>

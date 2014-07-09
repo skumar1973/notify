@@ -12,11 +12,11 @@
 	<table width="100%" align="center">
 		<tr>
 			<td><s:actionerror /> <s:form action="user" method="post">
-					<s:textfield name="login_id" key="app.user.login_id" />
+					<s:textfield name="loginID" key="app.user.login_id" />
 					<s:textfield name="password" type="password"
 						key="app.user.password" />
-					<s:select name="emp_id" list="emplist" listKey="id"
-						listValue="first_name" headerKey="0" headerValue="Select"
+					<s:select name="empID" list="empList" listKey="id"
+						listValue="firstName" headerKey="0" headerValue="Select"
 						key="app.user.emp_id" />
 					<s:submit value="Add User" />
 					<table width="100%" align="center" style="border: 1px solid black;">
@@ -29,15 +29,15 @@
 							<td>Updated Date</td>
 							<td>Updated By</td>
 						</tr>
-						<s:iterator id="ls" value="userlist">
+						<s:iterator id="ls" value="userList">
 							<tr>
 								<td><s:property value="id" /></td>
-								<td><s:property value="login_id" /></td>
-								<td><s:property value="emp_id" /></td>
-								<td><s:property value="created_dt" /></td>
-								<td><s:property value="created_by" /></td>
-								<td><s:property value="updated_dt" /></td>
-								<td><s:property value="updated_by" /></td>
+								<td><s:property value="loginID" /></td>
+								<td><s:property value="empID" /></td>
+								<td><s:property value="createdDt" /></td>
+								<td><s:property value="createdBy" /></td>
+								<td><s:property value="updatedDt" /></td>
+								<td><s:property value="updatedBy" /></td>
 							</tr>
 						</s:iterator>
 					</table>

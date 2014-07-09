@@ -28,16 +28,16 @@
 							<td>Updated Date</td>
 							<td>Updated By</td>
 						</tr>
-						<s:iterator id="ls" value="tflist">
+						<s:iterator id="ls" value="tfList">
 							<tr>
 								<td><s:property value="id" /></td>
 								<td><s:property value="name" /></td>
 								<td><s:property value="desc" /></td>
 								<td><s:property value="status" /></td>
-								<td><s:property value="created_dt" /></td>
-								<td><s:property value="created_by" /></td>
-								<td><s:property value="updated_dt" /></td>
-								<td><s:property value="updated_by" /></td>
+								<td><s:property value="createdDt" /></td>
+								<td><s:property value="createdBy" /></td>
+								<td><s:property value="updatedDt" /></td>
+								<td><s:property value="updatedBy" /></td>
 							</tr>
 						</s:iterator>
 					</table>

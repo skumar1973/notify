@@ -4,9 +4,12 @@ public class Project {
 	private int id;
 	private String name;
 	private String desc;
-	private int mgr_id;
+	private int mgrID;
 	private String status;
-	private String created_by;
+	private String createdBy;
+	private String createdDt;
+	private String updatedBy;
+	private String updatedDt;
 	public int getId() {
 		return id;
 	}
@@ -25,11 +28,11 @@ public class Project {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public int getMgr_id() {
-		return mgr_id;
+	public int getMgrID() {
+		return mgrID;
 	}
-	public void setMgr_id(int mgr_id) {
-		this.mgr_id = mgr_id;
+	public void setMgrID(int mgrID) {
+		this.mgrID = mgrID;
 	}
 	public String getStatus() {
 		return status;
@@ -37,11 +40,28 @@ public class Project {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getCreated_by() {
-		return created_by;
+	public String getCreatedBy() {
+		return createdBy;
 	}
-	public void setCreated_by(String created_by) {
-		this.created_by = created_by;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
-	
-}
+	public String getCreatedDt() {
+		return createdDt;
+	}
+	public void setCreatedDt(String createdDt) {
+		this.createdDt = createdDt;
+	}
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	public String getUpdatedDt() {
+		return updatedDt;
+	}
+	public void setUpdatedDt(String updatedDt) {
+		this.updatedDt = updatedDt;
+	}
+	}

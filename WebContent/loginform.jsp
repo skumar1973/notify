@@ -12,7 +12,7 @@
 	<table width="100%" align="center" cellpadding="10">
 		<tr>
 			<td><s:actionerror /> <s:form action="login" method="post">
-					<s:textfield name="loginid" key="app.login.loginid" />
+					<s:textfield name="loginID" key="app.login.loginid" />
 					<s:password name="password" key="app.login.password" />
 					<s:submit value="Login" />
 				</s:form></td>

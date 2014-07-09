@@ -7,35 +7,44 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.c2pi.notify.entity.EmployeeRole;
-import com.c2pi.notify.entity.Employees;
-import com.c2pi.notify.entity.Roles;
+import com.c2pi.notify.entity.Employee;
+import com.c2pi.notify.entity.Role;
 
 public class EmployeeRoleDAO {
 
+	private Connection conn = null;
+	private PreparedStatement pstmt = null;
+	private DBConn con = null;
+	private String query = "";
+	private int queryResult = 0;
+	private ResultSet rs = null;
+	private Role role = null;
+	private EmployeeRole empRole = null;
+
 	/**
 	 * 
-	 * @param emp_id
-	 * @param role_id
-	 * @param created_by
+	 * @param empID
+	 * @param roleID
+	 * @param createdBy
 	 * @return res
 	 * @throws SQLException
 	 */
-	public String addEmployeeRole(int emp_id, int role_id, String created_by) throws SQLException {
-		String query = "Insert Into `c2pidb`.`emp_roles` (`emp_id`,`role_id`,`created_by`) values(?,?,?)";
-		int res = 0;
-		Connection conn = null;
-		PreparedStatement pstmt =null;
-		DBConn con = new DBConn();
+	public String addEmployeeRole(EmployeeRole empRole)
+			throws SQLException {
+		query = "Insert Into `c2pidb`.`emp_roles` (`emp_id`,`role_id`,`created_by`, `created_dt`, `updated_by`, `updated_dt`) values(?,?,?,?,?,?)";
+		con = new DBConn();
 		try {
 			conn = con.getConn();
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, emp_id);
-			pstmt.setInt(2, role_id);
-			pstmt.setString(3,created_by);
-			System.out.println("query:" + query);
-			System.out.println("pstmt:"+pstmt);
-			res = pstmt.executeUpdate();
-			System.out.println("res=" + res);
+			pstmt.setInt(1, empRole.getEmpID());
+			pstmt.setInt(2, empRole.getRoleID());
+			pstmt.setString(3, empRole.getCreatedBy());
+			pstmt.setString(4, empRole.getCreatedDt());
+			pstmt.setString(5, empRole.getUpdatedBy());
+			pstmt.setString(6, empRole.getUpdatedDt());
+			System.out.println("pstmt:" + pstmt);
+			queryResult = pstmt.executeUpdate();
+			System.out.println("res=" + queryResult);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -44,52 +53,39 @@ public class EmployeeRoleDAO {
 			if (conn != null)
 				conn.close();
 		}
-		return (res + "- Employee role added.");
+		return (queryResult + "- Employee role added.");
 	}
 
 	/**
 	 * @return List of employee IDs
 	 * @throws SQLException
 	 */
-	public ArrayList<Employees> getEmpId() {
-		String query = "Select `id`,concat(concat(`first_name`,' '),`last_name`) first_name, last_name from `c2pidb`.`employees`";
-		ArrayList<Employees> empIDList = new ArrayList<Employees>();
-		Connection conn = null;
-		PreparedStatement pstmt =null;
-		DBConn con = new DBConn();
-		ResultSet rs =null;
+	public ArrayList<Employee> getEmpId() throws SQLException {
+		ArrayList<Employee> empIDList = null;
+		query = "Select `id`,concat(concat(`first_name`,' '),`last_name`) first_name, last_name from `c2pidb`.`employees`";
+		empIDList = new ArrayList<Employee>();
+		con = new DBConn();
 		try {
 			conn = con.getConn();
-			System.out.println("query"+query);
-			pstmt=conn.prepareStatement(query);
-			rs=pstmt.executeQuery();
+			System.out.println("query" + query);
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				Employees emp = new Employees();
+				Employee emp = new Employee();
 				emp.setId(rs.getInt("id"));
-				emp.setFirst_name(rs.getString("first_name"));
-				emp.setLast_name(rs.getString("last_name"));
+				emp.setFirstName(rs.getString("first_name"));
+				emp.setLastName(rs.getString("last_name"));
 
 				empIDList.add(emp);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pstmt != null){
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if (conn !=null){
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			if (pstmt != null)
+				pstmt.close();
+
+			if (conn != null)
+				conn.close();
 		}
 
 		return empIDList;
@@ -99,92 +95,67 @@ public class EmployeeRoleDAO {
 	 * @return List of role IDs
 	 * @throws SQLException
 	 */
-	public ArrayList<Roles> getRoleId(){
-		ArrayList<Roles> roleIDList = new ArrayList<Roles>();
-		String query="SELECT `id`, `name` FROM `c2pidb`.`roles`";
-		Connection conn = null;
-		PreparedStatement pstmt =null;
-		DBConn con = new DBConn();
-		ResultSet rs =null;
+	public ArrayList<Role> getRoleId() throws SQLException {
+		ArrayList<Role> roleIDList = null;
+		roleIDList = new ArrayList<Role>();
+		query = "SELECT `id`, `name` FROM `c2pidb`.`roles`";
+		con = new DBConn();
 		try {
 			conn = con.getConn();
-			System.out.println("query"+query);
-			pstmt=conn.prepareStatement(query);
-			rs=pstmt.executeQuery();
-			while (rs.next()){
-				Roles role = new Roles();
+			pstmt = conn.prepareStatement(query);
+			System.out.println("pstmt:" + pstmt);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				role = new Role();
 				role.setId(rs.getInt("id"));
 				role.setName(rs.getString("name"));
-				
 				roleIDList.add(role);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pstmt != null){
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn !=null){
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
 		}
 
 		return roleIDList;
 	}
+
 	/**
-	 * @return List of Employee role 
+	 * @return List of Employee role
 	 * @throws SQLException
 	 */
-	public ArrayList<EmployeeRole> getEmpRole(){
-		ArrayList<EmployeeRole> emproleList = new ArrayList<EmployeeRole>();
-		String query="SELECT `id`, `emp_id`, `role_id`, `created_dt`, `created_by`, `updated_dt`, `updated_by` FROM `c2pidb`.`emp_roles`";
-		Connection conn = null;
-		PreparedStatement pstmt =null;
-		DBConn con = new DBConn();
-		ResultSet rs =null;
+	public ArrayList<EmployeeRole> getEmpRole() throws SQLException {
+		ArrayList<EmployeeRole> empRoleList = null;
+		empRoleList = new ArrayList<EmployeeRole>();
+		query = "SELECT `id`, `emp_id`, `role_id`, `created_dt`, `created_by`, `updated_dt`, `updated_by` FROM `c2pidb`.`emp_roles`";
+		con = new DBConn();
 		try {
 			conn = con.getConn();
-			System.out.println("query: "+query);
-			pstmt=conn.prepareStatement(query);
-			rs=pstmt.executeQuery();
-			while (rs.next()){
-				EmployeeRole emprole = new EmployeeRole();
-				emprole.setId(rs.getInt("id"));
-				emprole.setEmp_id(rs.getInt("emp_id"));
-				emprole.setRole_id(rs.getInt("role_id"));
-				emprole.setCreated_dt(rs.getString("created_dt"));
-				emprole.setCreated_by(rs.getString("created_by"));
-				emprole.setUpdated_dt(rs.getString("updated_dt"));
-				emprole.setUpdated_by(rs.getString("updated_by"));
-				emproleList.add(emprole);
+			pstmt = conn.prepareStatement(query);
+			System.out.println("pstmt: " + pstmt);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				empRole = new EmployeeRole();
+				empRole.setId(rs.getInt("id"));
+				empRole.setEmpID(rs.getInt("emp_id"));
+				empRole.setRoleID(rs.getInt("role_id"));
+				empRole.setCreatedDt(rs.getString("created_dt"));
+				empRole.setCreatedBy(rs.getString("created_by"));
+				empRole.setUpdatedDt(rs.getString("updated_dt"));
+				empRole.setUpdatedBy(rs.getString("updated_by"));
+				empRoleList.add(empRole);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (pstmt != null){
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn !=null){
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			if (pstmt != null)
+				pstmt.close();
+			if (conn != null)
+				conn.close();
 		}
-
-		return emproleList;
+		return empRoleList;
 	}
 }

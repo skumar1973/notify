@@ -13,8 +13,8 @@
 	<table width="100%" align="center" cellpadding="0">
 		<tr>
 			<td><s:actionerror /> <s:form action="notifytask" method="post">
-					<s:textfield name="period_date" key="app.notifytask.period_date" />
-					<s:checkboxlist list="emptasklist" name="emptask" listKey="id"
+					<s:textfield name="periodDate" key="app.notifytask.period_date" />
+					<s:checkboxlist list="empTaskNameList" name="empTaskIDArray" listKey="id"
 						listValue="name" key="app.notifytask.emptask" />
 					<s:submit key="app.notifytask.submit" />
 
@@ -29,16 +29,16 @@
 							<td>Updated By</td>
 							<td>Updated Date</td>
 						</tr>
-						<s:iterator id="ls" value="etnlist">
+						<s:iterator id="ls" value="etnList">
 							<tr>
 								<td><s:property value="id" /></td>
-								<td><s:property value="emp_id" /></td>
-								<td><s:property value="task_id" /></td>
-								<td><s:property value="period_date" /></td>
-								<td><s:property value="created_dt" /></td>
-								<td><s:property value="created_by" /></td>
-								<td><s:property value="updated_dt" /></td>
-								<td><s:property value="updated_by" /></td>
+								<td><s:property value="empID" /></td>
+								<td><s:property value="taskID" /></td>
+								<td><s:property value="periodDate" /></td>
+								<td><s:property value="createdDt" /></td>
+								<td><s:property value="createdBy" /></td>
+								<td><s:property value="updatedDt" /></td>
+								<td><s:property value="updatedBy" /></td>
 
 							</tr>
 						</s:iterator>

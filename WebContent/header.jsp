@@ -15,8 +15,9 @@
 		    <td> <img src="<s:url value="/img/c2p_logo.jpg"/>" />  </td>
 			<td><s:date name="new java.util.Date()" format="dd MMMM yyyy" /></td>
 			<td align="center">
-				<h2>Notify TaskCompletion App </h2>
+				<h3>Notify TaskCompletion APP </h3>
 			</td>
+			<td align="left" ><s:property value="#session.loginID" />   <s:property value="#session.role"/> </td>
 		</tr>
 	</table>
 

@@ -2,52 +2,59 @@ package com.c2pi.notify.entity;
 
 public class User {
 	private int id;
-	private String login_id;
-	private int emp_id;
-	private String created_dt;
-	private String created_by;
-	private String updated_dt;
-	private String updated_by;
+	private String loginID;
+	private String password;
+	private int empID;
+	private String createdDt;
+	private String createdBy;
+	private String updatedDt;
+	private String updatedBy;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getLogin_id() {
-		return login_id;
+	public String getLoginID() {
+		return loginID;
 	}
-	public void setLogin_id(String login_id) {
-		this.login_id = login_id;
+	public void setLoginID(String loginID) {
+		this.loginID = loginID;
 	}
-	public int getEmp_id() {
-		return emp_id;
+	public int getEmpID() {
+		return empID;
 	}
-	public void setEmp_id(int emp_id) {
-		this.emp_id = emp_id;
+	public void setEmpID(int empID) {
+		this.empID = empID;
 	}
-	public String getCreated_dt() {
-		return created_dt;
+	public String getCreatedDt() {
+		return createdDt;
 	}
-	public void setCreated_dt(String created_dt) {
-		this.created_dt = created_dt;
+	public void setCreatedDt(String createdDt) {
+		this.createdDt = createdDt;
 	}
-	public String getCreated_by() {
-		return created_by;
+	public String getCreatedBy() {
+		return createdBy;
 	}
-	public void setCreated_by(String created_by) {
-		this.created_by = created_by;
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
-	public String getUpdated_dt() {
-		return updated_dt;
+	public String getUpdatedDt() {
+		return updatedDt;
 	}
-	public void setUpdated_dt(String updated_dt) {
-		this.updated_dt = updated_dt;
+	public void setUpdatedDt(String updatedDt) {
+		this.updatedDt = updatedDt;
 	}
-	public String getUpdated_by() {
-		return updated_by;
+	public String getUpdatedBy() {
+		return updatedBy;
 	}
-	public void setUpdated_by(String updated_by) {
-		this.updated_by = updated_by;
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

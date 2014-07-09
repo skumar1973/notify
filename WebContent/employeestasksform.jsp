@@ -14,11 +14,11 @@
 			<td><s:actionerror /> <s:form action="employeestasks"
 					method="post">
 
-					<s:select name="emp_id" list="emplist" listKey="id"
-						listValue="first_name" headerKey="0" headerValue="Select"
+					<s:select name="empID" list="empList" listKey="id"
+						listValue="firstName" headerKey="0" headerValue="Select"
 						key="app.employeestasks.emp_id" />
 
-					<s:select name="task_id" list="taskslist" listKey="id"
+					<s:select name="taskID" list="taskList" listKey="id"
 						listValue="name" headerKey="0" headerValue="Select"
 						key="app.employeestasks.task_id" />
 
@@ -35,15 +35,15 @@
 							<td>Updated Date</td>
 							<td>Updated By</td>
 						</tr>
-						<s:iterator id="ls" value="emptaskslist">
+						<s:iterator id="ls" value="empTaskList">
 							<tr>
 								<td><s:property value="id" /></td>
-								<td><s:property value="emp_id" /></td>
-								<td><s:property value="task_id" /></td>
-								<td><s:property value="created_dt" /></td>
-								<td><s:property value="created_by" /></td>
-								<td><s:property value="updated_dt" /></td>
-								<td><s:property value="updated_by" /></td>
+								<td><s:property value="empID" /></td>
+								<td><s:property value="taskID" /></td>
+								<td><s:property value="createdDt" /></td>
+								<td><s:property value="createdBy" /></td>
+								<td><s:property value="updatedDt" /></td>
+								<td><s:property value="updatedBy" /></td>
 
 							</tr>
 						</s:iterator>
