@@ -1,5 +1,6 @@
 package com.c2pi.notify.action;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.c2pi.notify.entity.Employee;
@@ -14,16 +16,19 @@ import com.c2pi.notify.service.EmployeeManager;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
-public class EmployeeAction extends ActionSupport implements ModelDriven<Employee>,
-		SessionAware {
+/**
+ * @author Shailendrak
+ * 
+ */
+public class EmployeeAction extends ActionSupport implements
+		ModelDriven<Employee>, SessionAware {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Employee> empList = null;
 	private EmployeeManager empMgr = null;
 	private Employee employee = new Employee();
+
+	Logger logger = Logger.getLogger(EmployeeAction.class.getName());
 
 	Map<String, Object> sessionMap;
 
@@ -32,40 +37,78 @@ public class EmployeeAction extends ActionSupport implements ModelDriven<Employe
 		this.sessionMap = sessionMap;
 	}
 
-	public String execute() throws Exception {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#execute()
+	 */
+	public String execute() {
+
 		String result = "";
-		System.out.println("employee action execute method..");
-		// System.out.println("firstname " + firstName);
+		logger.debug("employee action execute method..");
+
 		empMgr = new EmployeeManager();
 
 		if (sessionMap != null)
 			sessionMap.remove("result");
-		System.out.println("employeemanger addemployee method");
-		// result = empMgr.addEmployee(firstName, lastName, email, design,
-		// status,
-		// (String) sessionMap.get("loginID"));
-		result = empMgr.addEmployee(employee);
+		logger.info("Employee" + employee);
+		System.out.println("check valid login start..");
+		logger.debug("check valid login start..");
+		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
+				|| ((Integer) sessionMap.get("empID")) == 0) {
+			logger.debug("ERROR: check valid login..  failed..");
+			this.addActionError(getText("app.error"));
+			return ERROR;
+		}
+
+		logger.debug("calling method addEmployee..");
+		try {
+			result = empMgr.addEmployee(employee);
+		} catch (SQLException e) {
+			logger.error("ERROR:" + e.getMessage());
+			e.printStackTrace();
+			this.addActionError(getText("app.error"));
+			return ERROR;
+		} catch (ClassNotFoundException e) {
+			logger.error("ERROR:" + e.getMessage());
+			e.printStackTrace();
+			this.addActionError(getText("app.error"));
+			return ERROR;
+		} catch (IOException e) {
+			logger.error("ERROR:" + e.getMessage());
+			e.printStackTrace();
+			this.addActionError(getText("app.error"));
+			return ERROR;
+		}
 
 		sessionMap.put("result", result);
 
 		return "admin";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ModelDriven#getModel()
+	 */
 	@Override
 	public Employee getModel() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
 		Date date = new Date();
-		System.out.println("getModel Date:" + dateFormat.format(date));
-		employee.setUpdatedDt(dateFormat.format(date));
-		employee.setCreatedDt(dateFormat.format(date));
-		employee.setCreatedBy((String) sessionMap.get("loginID"));
-		employee.setUpdatedBy((String) sessionMap.get("loginID"));
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String fmtDate = dateFormat.format(date);
+		String loginid = (String) sessionMap.get("loginID");
+		employee.setUpdatedDt(fmtDate);
+		employee.setCreatedDt(fmtDate);
+		employee.setCreatedBy(loginid);
+		employee.setUpdatedBy(loginid);
 
 		return employee;
 	}
 
 	public void validate() {
-		System.out.println("employee action validate method..");
+		logger.debug("employee action validate method..");
+
 		if ((employee.getFirstName() == null)
 				|| (employee.getFirstName().length() == 0)) {
 			this.addFieldError("firstName",
@@ -74,57 +117,45 @@ public class EmployeeAction extends ActionSupport implements ModelDriven<Employe
 			try {
 				empList = empMgr.getEmpList();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				logger.error("ERROR:" + e.getMessage());
 				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+
+			} catch (ClassNotFoundException e) {
+				logger.error("ERROR:" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+			} catch (IOException e) {
+				logger.error("ERROR:" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
 			}
 		}
 	}
 
-	public String getEmployeeList() throws SQLException {
+	/**
+	 * @return input
+	 * @throws SQLException
+	 */
+	public String getEmployeeList() {
 		empMgr = new EmployeeManager();
-		empList = empMgr.getEmpList();
+		try {
+			empList = empMgr.getEmpList();
+		} catch (ClassNotFoundException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			this.addFieldError("firstName", getText("app.error"));
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			this.addFieldError("firstName", getText("app.error"));
+		} catch (IOException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			this.addFieldError("firstName", getText("app.error"));
+		}
 		return "input";
 	}
-
-	// public String getFirstName() {
-	// return firstName;
-	// }
-	//
-	// public void setFirstName(String firstName) {
-	// this.firstName = firstName;
-	// }
-	//
-	// public String getLastName() {
-	// return lastName;
-	// }
-	//
-	// public void setLastName(String lastName) {
-	// this.lastName = lastName;
-	// }
-	//
-	// public String getEmail() {
-	// return email;
-	// }
-	//
-	// public void setEmail(String email) {
-	// this.email = email;
-	// }
-	//
-	// public String getDesign() {
-	// return design;
-	// }
-	//
-	// public void setDesign(String design) {
-	// this.design = design;
-	// }
-	//
-	// public String getStatus() {
-	// return status;
-	// }
-	//
-	// public void setStatus(String status) {
-	// this.status = status;
-	// }
 
 	public ArrayList<Employee> getEmpList() {
 		return empList;

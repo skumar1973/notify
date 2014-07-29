@@ -10,14 +10,13 @@
 <body>
 
 	<table width="100%">
-<!-- 		<tr> -->
-<%-- 			<td align="left" style="border-bottom: 2px solid green;"><s:property --%>
-<%-- 					value="#session.loginID" /></td> --%>
-<%-- 			<td align="left"> <s:property value="#session.role"/> </td> --%>
-<!-- 		</tr> -->
 		<tr>
 			<td align="left"><a href="employeeform.action">Employees</a></td>
 		</tr>
+		<tr>
+			<td align="left"><a href="employeeeditform.action">SaveOrUpdateEmp</a></td>
+		</tr>
+
 		<tr>
 			<td align="left"><a href="userform.action">Users</a></td>
 		</tr>				

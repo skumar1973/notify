@@ -14,8 +14,8 @@
 		<tr>
 			<td><s:actionerror /> <s:form action="notifytask" method="post">
 					<s:textfield name="periodDate" key="app.notifytask.period_date" />
-					<s:checkboxlist list="empTaskNameList" name="empTaskIDArray" listKey="id"
-						listValue="name" key="app.notifytask.emptask" />
+					<s:checkboxlist list="empTaskNameList" name="empTaskIDArray"
+						listKey="id" listValue="name" key="app.notifytask.emptask" />
 					<s:submit key="app.notifytask.submit" />
 
 					<table width="100%" align="center" style="border: 1px solid black;">
@@ -47,6 +47,12 @@
 				</s:form></td>
 		</tr>
 	</table>
-
+	<table width="100%" align="center" >
+		<s:iterator id="ls1" value="dateList">
+			<tr>
+				<td style="border: 1px solid black;"><s:property /></td>
+			</tr>
+		</s:iterator>
+	</table>
 </body>
 </html>

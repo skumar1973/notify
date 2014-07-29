@@ -1,5 +1,6 @@
 package com.c2pi.notify.action;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -9,6 +10,10 @@ import com.c2pi.notify.entity.Menu;
 import com.c2pi.notify.service.MenuManager;
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * @author Shailendrak
+ * 
+ */
 public class MenuAction extends ActionSupport implements SessionAware {
 
 	/**
@@ -23,7 +28,7 @@ public class MenuAction extends ActionSupport implements SessionAware {
 	private String target;
 
 	ArrayList<Menu> mnList = new ArrayList<Menu>();
-	
+
 	Map<String, Object> sessionMap;
 
 	@Override
@@ -31,6 +36,11 @@ public class MenuAction extends ActionSupport implements SessionAware {
 		this.sessionMap = sessionMap;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#execute()
+	 */
 	public String execute() throws Exception {
 		System.out.println("menu action execute method..");
 		System.out.println("name " + name);
@@ -45,9 +55,14 @@ public class MenuAction extends ActionSupport implements SessionAware {
 		return "admin";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#validate()
+	 */
 	public void validate() {
 		System.out.println("menu action validate method..");
-		if ((name == null) || name.length()==0){
+		if ((name == null) || name.length() == 0) {
 			this.addFieldError("name", getText("app.menu.name.blank"));
 			MenuManager em = new MenuManager();
 			try {
@@ -55,14 +70,34 @@ public class MenuAction extends ActionSupport implements SessionAware {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 		}
 	}
 
-	public String getMenuList() throws SQLException {
+	/**
+	 * @return
+	 */
+	public String getMenuList() {
 		MenuManager em = new MenuManager();
-		mnList = em.getMenuList();
+		try {
+			mnList = em.getMenuList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return "input";
 	}

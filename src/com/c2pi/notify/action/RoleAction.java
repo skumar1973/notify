@@ -1,5 +1,6 @@
 package com.c2pi.notify.action;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 
+/**
+ * @author Shailendrak
+ * 
+ */
 public class RoleAction extends ActionSupport implements SessionAware,
 		ModelDriven<Role>, Preparable {
 
@@ -21,7 +26,6 @@ public class RoleAction extends ActionSupport implements SessionAware,
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
 
 	ArrayList<Role> roleList = new ArrayList<Role>();
 	Role role = new Role();
@@ -32,6 +36,11 @@ public class RoleAction extends ActionSupport implements SessionAware,
 		this.sessionMap = sessionMap;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#validate()
+	 */
 	public void validate() {
 		System.out.println("role action validate");
 
@@ -41,14 +50,25 @@ public class RoleAction extends ActionSupport implements SessionAware,
 			try {
 				roleList = rm.getRoleList();
 			} catch (SQLException e) {
-				
+
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
 	}
 
-	public String execute() throws Exception {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#execute()
+	 */
+	public String execute() {
 
 		System.out.println("role action execute");
 		// System.out.println("name " + name);
@@ -56,15 +76,38 @@ public class RoleAction extends ActionSupport implements SessionAware,
 		sessionMap.remove("result");
 		RoleManager rm = new RoleManager();
 		System.out.println("role manager addrole method..");
-		res = rm.AddRole(role);
+		try {
+			res = rm.AddRole(role);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		sessionMap.put("result", res);
 		return "admin";
 	}
 
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getRoleList() throws SQLException {
 
 		RoleManager rm = new RoleManager();
-		roleList = rm.getRoleList();
+		try {
+			roleList = rm.getRoleList();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return "input";
 	}
@@ -81,14 +124,21 @@ public class RoleAction extends ActionSupport implements SessionAware,
 		this.roleList = roleList;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ModelDriven#getModel()
+	 */
 	@Override
 	public Role getModel() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
-		role.setCreatedBy((String) sessionMap.get("loginID"));
-		role.setCreatedDt(dateFormat.format(date));
-		role.setUpdatedBy((String) sessionMap.get("loginID"));
-		role.setUpdatedDt(dateFormat.format(date));
+		String loginid = (String) sessionMap.get("loginID");
+		String fmtDate = dateFormat.format(date);
+		role.setCreatedBy(loginid);
+		role.setCreatedDt(fmtDate);
+		role.setUpdatedBy(loginid);
+		role.setUpdatedDt(fmtDate);
 
 		return role;
 	}

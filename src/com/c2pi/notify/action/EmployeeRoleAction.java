@@ -3,6 +3,7 @@
  */
 package com.c2pi.notify.action;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,14 +24,11 @@ import com.opensymphony.xwork2.ModelDriven;
  * @author Rajneeshk
  * 
  */
-public class EmployeeRoleAction extends ActionSupport implements SessionAware, ModelDriven<EmployeeRole> {
+public class EmployeeRoleAction extends ActionSupport implements SessionAware,
+		ModelDriven<EmployeeRole> {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-//	int empID;
-//	int roleID;
+
 	ArrayList<Employee> empIDList = null;
 	ArrayList<Role> roleIDList = null;
 	ArrayList<EmployeeRole> empRoleList = null;
@@ -51,9 +49,9 @@ public class EmployeeRoleAction extends ActionSupport implements SessionAware, M
 		String result = "";
 		EmployeeRoleManager empRoleMgr = null;
 		empRoleMgr = new EmployeeRoleManager();
-		if (sessionMap != null)	sessionMap.remove("result");
+		if (sessionMap != null)
+			sessionMap.remove("result");
 		System.out.println("Employee role action execute.");
-//		result = empRoleMgr.addEmployeeRole(empID, roleID, (String) sessionMap.get("loginID"));
 		result = empRoleMgr.addEmployeeRole(empRole);
 		System.out.println("result:" + result);
 		sessionMap.put("result", result);
@@ -64,7 +62,7 @@ public class EmployeeRoleAction extends ActionSupport implements SessionAware, M
 		System.out.println("Task action validate");
 		if ((empRole.getEmpID() == 0)) {
 			this.addFieldError("empID", getText("app.employeeRole.empID.blank"));
-		
+
 			EmployeeRoleManager empRoleMgr = null;
 			empRoleMgr = new EmployeeRoleManager();
 			System.out
@@ -74,6 +72,12 @@ public class EmployeeRoleAction extends ActionSupport implements SessionAware, M
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			System.out.println("TaskManager get list of role IDs method ...");
 			try {
@@ -81,11 +85,23 @@ public class EmployeeRoleAction extends ActionSupport implements SessionAware, M
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			System.out.println("TaskManager get list of Emp role method ...");
 			try {
 				empRoleList = empRoleMgr.getEmpRole();
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -142,22 +158,6 @@ public class EmployeeRoleAction extends ActionSupport implements SessionAware, M
 		this.roleIDList = roleIDList;
 	}
 
-//	public int getEmpID() {
-//		return empID;
-//	}
-//
-//	public void setEmpID(int empID) {
-//		this.empID = empID;
-//	}
-//
-//	public int getRoleID() {
-//		return roleID;
-//	}
-//
-//	public void setRoleID(int roleID) {
-//		this.roleID = roleID;
-//	}
-
 	public ArrayList<EmployeeRole> getEmpRoleList() {
 		return empRoleList;
 	}
@@ -166,15 +166,21 @@ public class EmployeeRoleAction extends ActionSupport implements SessionAware, M
 		this.empRoleList = empRoleList;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.opensymphony.xwork2.ModelDriven#getModel()
+	 */
 	@Override
 	public EmployeeRole getModel() {
+
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
-		System.out.println("getModel Date:" + dateFormat.format(date));
-		empRole.setUpdatedDt(dateFormat.format(date));
-		empRole.setCreatedDt(dateFormat.format(date));
-		empRole.setCreatedBy((String)sessionMap.get("loginID")) ;
-		empRole.setUpdatedBy((String)sessionMap.get("loginID")) ;
+		String fmtDate = dateFormat.format(date);
+		String loginid = (String) sessionMap.get("loginID");
+		empRole.setUpdatedDt(fmtDate);
+		empRole.setCreatedDt(fmtDate);
+		empRole.setCreatedBy(loginid);
+		empRole.setUpdatedBy(loginid);
+
 		return empRole;
 	}
 

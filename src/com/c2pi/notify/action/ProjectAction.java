@@ -1,5 +1,6 @@
 package com.c2pi.notify.action;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 
+/**
+ * @author Shailendrak
+ * 
+ */
 public class ProjectAction extends ActionSupport implements SessionAware,
 		Preparable, ModelDriven<Project> {
 	/**
@@ -23,11 +28,11 @@ public class ProjectAction extends ActionSupport implements SessionAware,
 	private static final long serialVersionUID = 1L;
 
 	Project project = new Project();
-	
+
 	private ArrayList<Project> projList = null;
 	private ArrayList<Employee> empList = null;
 	ProjectManager pm = null;
-	
+
 	Map<String, Object> sessionMap;
 
 	@Override
@@ -35,37 +40,90 @@ public class ProjectAction extends ActionSupport implements SessionAware,
 		this.sessionMap = sessionMap;
 	}
 
-	public String getProjNEmpList() throws Exception {
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+	public String getProjNEmpList()  {
 		pm = new ProjectManager();
-		projList = pm.getProjList();
-		empList = pm.getEmpList();
-		
+		try {
+			projList = pm.getProjList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			empList = pm.getEmpList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return "input";
 	}
-	public void validate(){
-		if ((project.getName() ==null) || (project.getName().length()==0)){
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#validate()
+	 */
+	public void validate() {
+		if ((project.getName() == null) || (project.getName().length() == 0)) {
 			addFieldError("name", getText("app.project.name.blank"));
-			
+
 			pm = new ProjectManager();
 			try {
-				projList = pm.getProjList();
+				try {
+					projList = pm.getProjList();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
-				empList = pm.getEmpList();
+				try {
+					empList = pm.getEmpList();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#execute()
+	 */
 	public String execute() throws Exception {
 		String res = "";
 		System.out.println("project action execute");
-//		System.out.println("id " + mgrID);
-//		System.out.println("name " + name);
+
 		if (sessionMap != null)
 			sessionMap.remove("result");
 		pm = new ProjectManager();
@@ -77,11 +135,10 @@ public class ProjectAction extends ActionSupport implements SessionAware,
 	@Override
 	public void prepare() throws Exception {
 		// TODO Auto-generated method stub
-		if (sessionMap == null){
+		if (sessionMap == null) {
 			System.out.println("Not log in.....");
 		}
 	}
-
 
 	public ArrayList<Project> getProjList() {
 		return projList;
@@ -99,17 +156,23 @@ public class ProjectAction extends ActionSupport implements SessionAware,
 		this.empList = empList;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ModelDriven#getModel()
+	 */
 	@Override
 	public Project getModel() {
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
-		
-		project.setUpdatedDt(dateFormat.format(date));
-		project.setCreatedDt(dateFormat.format(date));
-		project.setCreatedBy((String) sessionMap.get("loginID"));
-		project.setUpdatedBy((String) sessionMap.get("loginID"));
-		
+		String fmtDate = dateFormat.format(date);
+		String loginid = (String) sessionMap.get("loginID");
+		project.setUpdatedDt(fmtDate);
+		project.setCreatedDt(fmtDate);
+		project.setCreatedBy(loginid);
+		project.setUpdatedBy(loginid);
+
 		return project;
 	}
 

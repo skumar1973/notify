@@ -1,5 +1,6 @@
 package com.c2pi.notify.action;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.Preparable;
 
+/**
+ * @author Shailendrak
+ * 
+ */
 public class ProjectEmployeeAction extends ActionSupport implements
 		SessionAware, Preparable, ModelDriven<ProjectEmployee> {
 
@@ -37,43 +42,98 @@ public class ProjectEmployeeAction extends ActionSupport implements
 		this.sessionMap = sessionMap;
 	}
 
-	public String execute() throws Exception {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#execute()
+	 */
+	public String execute()  {
 		System.out.println("ProjectEmployees action execute");
 		pem = new ProjectEmployeeManager();
 		String res = "";
-		if (sessionMap != null) sessionMap.remove("result");
+		if (sessionMap != null)
+			sessionMap.remove("result");
 		System.out.println("res=" + res);
-		res = pem.addProjectEmployee(projEmp);
+		try {
+			res = pem.addProjectEmployee(projEmp);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		sessionMap.put("result", res);
 		return "manager";
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#validate()
+	 */
 	public void validate() {
-		
+
 		System.out.println("ProjectEmployees action validate");
-		if ((projEmp.getProjID()==0)){
-			addFieldError("projID",getText("app.projectEmployee.projID.blank"));
+		if ((projEmp.getProjID() == 0)) {
+			addFieldError("projID", getText("app.projectEmployee.projID.blank"));
 			int empID = 0;
 			System.out.println("ProjectEmployees getprjemplist method...");
 			pem = new ProjectEmployeeManager();
 			empID = ((Integer) sessionMap.get("empID"));
 			System.out.println("session emp_id=" + empID);
 			try {
-				projEmpList = pem.getProjEmpList(empID);
+			
+					projEmpList = pem.getProjEmpList(empID);
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			projList = pem.getProjectList(empID);
 			try {
-				empList = pem.getEmpList();
+				
+					projList = pem.getProjectList(empID);
+				
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				
+					empList = pem.getEmpList();
+				
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
 
+	/**
+	 * @return
+	 * @throws Exception
+	 */
 	public String getProjNEmpNProjEmpList() throws Exception {
 		int empID = 0;
 		System.out.println("ProjectEmployees getprjemplist method...");
@@ -83,15 +143,13 @@ public class ProjectEmployeeAction extends ActionSupport implements
 		projEmpList = pem.getProjEmpList(empID);
 		projList = pem.getProjectList(empID);
 		empList = pem.getEmpList();
-		
+
 		return "input";
 	}
 
 	public void prepare() {
 		System.out.println("ProjectEmployees prepare method");
 	}
-
-
 
 	public ArrayList<Project> getProjList() {
 		return projList;
@@ -117,18 +175,23 @@ public class ProjectEmployeeAction extends ActionSupport implements
 		this.projEmpList = projEmpList;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ModelDriven#getModel()
+	 */
 	@Override
 	public ProjectEmployee getModel() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
-		System.out.println("getModel Date:" + dateFormat.format(date));
-		projEmp.setUpdatedDt(dateFormat.format(date));
-		projEmp.setCreatedDt(dateFormat.format(date));
-		projEmp.setCreatedBy((String) sessionMap.get("loginID"));
-		projEmp.setUpdatedBy((String) sessionMap.get("loginID"));
-		
+		String fmtDate = dateFormat.format(date);
+		String loginid = (String) sessionMap.get("loginID");
+		projEmp.setUpdatedDt(fmtDate);
+		projEmp.setCreatedDt(fmtDate);
+		projEmp.setCreatedBy(loginid);
+		projEmp.setUpdatedBy(loginid);
+
 		return projEmp;
 	}
-
 
 }

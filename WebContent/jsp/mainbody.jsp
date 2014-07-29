@@ -13,9 +13,9 @@
 <p align="justify">
 
   APP will help do the following: <br>
-  -> Admin user will do setup by adding new employee, user, task, project etc. <br>
-  -> Manager user will add new employee to project and assign task to employee. <br>
-  -> Team member will notify about completed task to manager using Notify Tasks <br>
+   <strong>Admin </strong> user will do setup by adding new employee, user, task, project etc. <br>
+   <strong>Manager </strong> user will add new employee to project and assign task to employee. <br>
+   <strong>Team </strong> member will notify about completed task to manager using Notify Tasks <br>
 
 </p>
 </td></tr>

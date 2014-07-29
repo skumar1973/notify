@@ -1,11 +1,13 @@
 package com.c2pi.notify.dao;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.c2pi.notify.common.DBConn;
 import com.c2pi.notify.entity.EmployeeRole;
 import com.c2pi.notify.entity.Employee;
 import com.c2pi.notify.entity.Role;
@@ -28,12 +30,14 @@ public class EmployeeRoleDAO {
 	 * @param createdBy
 	 * @return res
 	 * @throws SQLException
+	 * @throws ClassNotFoundException 
+	 * @throws IOException 
 	 */
 	public String addEmployeeRole(EmployeeRole empRole)
-			throws SQLException {
+			throws SQLException, ClassNotFoundException, IOException {
 		query = "Insert Into `c2pidb`.`emp_roles` (`emp_id`,`role_id`,`created_by`, `created_dt`, `updated_by`, `updated_dt`) values(?,?,?,?,?,?)";
 		con = new DBConn();
-		try {
+
 			conn = con.getConn();
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, empRole.getEmpID());
@@ -45,27 +49,27 @@ public class EmployeeRoleDAO {
 			System.out.println("pstmt:" + pstmt);
 			queryResult = pstmt.executeUpdate();
 			System.out.println("res=" + queryResult);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+
 			if (pstmt != null)
 				pstmt.close();
 			if (conn != null)
 				conn.close();
-		}
+		
 		return (queryResult + "- Employee role added.");
 	}
 
 	/**
 	 * @return List of employee IDs
 	 * @throws SQLException
+	 * @throws ClassNotFoundException 
+	 * @throws IOException 
 	 */
-	public ArrayList<Employee> getEmpId() throws SQLException {
+	public ArrayList<Employee> getEmpId() throws SQLException, ClassNotFoundException, IOException {
 		ArrayList<Employee> empIDList = null;
 		query = "Select `id`,concat(concat(`first_name`,' '),`last_name`) first_name, last_name from `c2pidb`.`employees`";
 		empIDList = new ArrayList<Employee>();
 		con = new DBConn();
-		try {
+
 			conn = con.getConn();
 			System.out.println("query" + query);
 			pstmt = conn.prepareStatement(query);
@@ -78,15 +82,13 @@ public class EmployeeRoleDAO {
 
 				empIDList.add(emp);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+
 			if (pstmt != null)
 				pstmt.close();
 
 			if (conn != null)
 				conn.close();
-		}
+
 
 		return empIDList;
 	}
@@ -94,13 +96,15 @@ public class EmployeeRoleDAO {
 	/**
 	 * @return List of role IDs
 	 * @throws SQLException
+	 * @throws ClassNotFoundException 
+	 * @throws IOException 
 	 */
-	public ArrayList<Role> getRoleId() throws SQLException {
+	public ArrayList<Role> getRoleId() throws SQLException, ClassNotFoundException, IOException {
 		ArrayList<Role> roleIDList = null;
 		roleIDList = new ArrayList<Role>();
 		query = "SELECT `id`, `name` FROM `c2pidb`.`roles`";
 		con = new DBConn();
-		try {
+		
 			conn = con.getConn();
 			pstmt = conn.prepareStatement(query);
 			System.out.println("pstmt:" + pstmt);
@@ -111,14 +115,12 @@ public class EmployeeRoleDAO {
 				role.setName(rs.getString("name"));
 				roleIDList.add(role);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+
 			if (pstmt != null)
 				pstmt.close();
 			if (conn != null)
 				conn.close();
-		}
+		
 
 		return roleIDList;
 	}
@@ -126,13 +128,15 @@ public class EmployeeRoleDAO {
 	/**
 	 * @return List of Employee role
 	 * @throws SQLException
+	 * @throws ClassNotFoundException 
+	 * @throws IOException 
 	 */
-	public ArrayList<EmployeeRole> getEmpRole() throws SQLException {
+	public ArrayList<EmployeeRole> getEmpRole() throws SQLException, ClassNotFoundException, IOException {
 		ArrayList<EmployeeRole> empRoleList = null;
 		empRoleList = new ArrayList<EmployeeRole>();
 		query = "SELECT `id`, `emp_id`, `role_id`, `created_dt`, `created_by`, `updated_dt`, `updated_by` FROM `c2pidb`.`emp_roles`";
 		con = new DBConn();
-		try {
+
 			conn = con.getConn();
 			pstmt = conn.prepareStatement(query);
 			System.out.println("pstmt: " + pstmt);
@@ -148,14 +152,12 @@ public class EmployeeRoleDAO {
 				empRole.setUpdatedBy(rs.getString("updated_by"));
 				empRoleList.add(empRole);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
+
 			if (pstmt != null)
 				pstmt.close();
 			if (conn != null)
 				conn.close();
-		}
+		
 		return empRoleList;
 	}
 }

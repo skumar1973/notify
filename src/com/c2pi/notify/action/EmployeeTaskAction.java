@@ -1,5 +1,6 @@
 package com.c2pi.notify.action;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -13,12 +14,13 @@ import com.c2pi.notify.service.EmployeeTaskManager;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.Preparable;
 
-public class EmployeeTaskAction extends ActionSupport implements
-		SessionAware, Preparable {
+/**
+ * @author Shailendrak
+ * 
+ */
+public class EmployeeTaskAction extends ActionSupport implements SessionAware,
+		Preparable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int empID;
 	private int taskID;
@@ -26,9 +28,9 @@ public class EmployeeTaskAction extends ActionSupport implements
 	ArrayList<EmployeeTask> empTaskList = null;
 	ArrayList<Employee> empList = null;
 	ArrayList<Task> taskList = null;
-	
+
 	EmployeeTaskManager etm = null;
-	
+
 	Map<String, Object> sessionMap;
 
 	@Override
@@ -36,6 +38,11 @@ public class EmployeeTaskAction extends ActionSupport implements
 		this.sessionMap = sessionMap;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.opensymphony.xwork2.ActionSupport#execute()
+	 */
 	public String execute() throws Exception {
 		System.out.println("EmployeesTasks action execute");
 		etm = new EmployeeTaskManager();
@@ -43,14 +50,15 @@ public class EmployeeTaskAction extends ActionSupport implements
 		if (sessionMap != null)
 			sessionMap.remove("result");
 		System.out.println("res=" + res);
-		res = etm.addEmployeeTask(empID, taskID, (String) sessionMap.get("loginID"));
+		res = etm.addEmployeeTask(empID, taskID,
+				(String) sessionMap.get("loginID"));
 		sessionMap.put("result", res);
 		return "manager";
 	}
 
 	public void validate() {
 		System.out.println("EmployeesTasks action validate");
-		if (( empID == 0)) {
+		if ((empID == 0)) {
 			this.addFieldError("empID", getText("app.employeeTask.empID.blank"));
 			int empID = 0;
 			System.out.println("EmployeesTasks getprjemplist method...");
@@ -62,16 +70,34 @@ public class EmployeeTaskAction extends ActionSupport implements
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			try {
-				empList=etm.getEmpList(empID);
-			} catch (SQLException e) {
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
-				taskList=etm.getTaskList(empID);
+				empList = etm.getEmpList(empID);
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				taskList = etm.getTaskList(empID);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -85,9 +111,9 @@ public class EmployeeTaskAction extends ActionSupport implements
 		empID = ((Integer) sessionMap.get("empID"));
 		System.out.println("session emp_id=" + empID);
 		empTaskList = etm.getEmpTaskList(empID);
-		empList=etm.getEmpList(empID);
-		taskList=etm.getTaskList(empID);
-		
+		empList = etm.getEmpList(empID);
+		taskList = etm.getTaskList(empID);
+
 		return "input";
 	}
 
@@ -134,6 +160,5 @@ public class EmployeeTaskAction extends ActionSupport implements
 	public void setTaskList(ArrayList<Task> taskList) {
 		this.taskList = taskList;
 	}
-
 
 }

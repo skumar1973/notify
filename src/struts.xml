@@ -4,7 +4,7 @@
 "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 	<constant name="devMode" value="true" />
-	<package name="default" extends="tiles-default">
+	<package name="default" namespace="/" extends="tiles-default">
 
 		<action name="login" class="com.c2pi.notify.action.LoginAction">
 			<result name="error">login.jsp</result>
@@ -29,7 +29,7 @@
 
 		<action name="role" class="com.c2pi.notify.action.RoleAction">
 
-			<result name="error">roleform.jsp</result>
+			<result name="error">jsp/roleform.jsp</result>
 			<result name="input" type="tiles">role.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -42,38 +42,48 @@
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getRoleList</param>
 			</interceptor-ref>
-			<result name="error">roleform.jsp</result>
+			<result name="error">jsp/roleform.jsp</result>
 			<result name="input" type="tiles">role.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
 			<result name="team" type="tiles">team.welcome.def</result>
 		</action>
-
-		<action name="taskfreq" class="com.c2pi.notify.action.TaskFreqAction">
-
-			<result name="error">taskfreqform.jsp</result>
+		
+		<!-- Task Frequency -->
+		<action name="taskfreq" class="com.c2pi.notify.action.TaskFreqAction" method="execute">
+			<result name="error" type="tiles">taskfreq.def</result>
 			<result name="input" type="tiles">taskfreq.def</result>
-			<result name="admin" type="tiles">admin.welcome.def</result>
-			<result name="manager" type="tiles">manager.welcome.def</result>
-			<result name="team" type="tiles">team.welcome.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>		
 		</action>
 
-		<action name="taskfreqform" class="com.c2pi.notify.action.TaskFreqAction"
-			method="getTaskFreqList">
-
+		<action name="taskfreqform" class="com.c2pi.notify.action.TaskFreqAction" method="getTaskFreqList">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getTaskFreqList</param>
 			</interceptor-ref>
-			<result name="error">taskfreqform.jsp</result>
-			<result name="input" type="tiles">taskfreq.def</result>
-			<result name="admin" type="tiles">admin.welcome.def</result>
-			<result name="manager" type="tiles">manager.welcome.def</result>
-			<result name="team" type="tiles">team.welcome.def</result>
+			<result name="error" type="tiles">taskfreq.def</result>
+			<result name="input" type="tiles">taskfreq.def</result>		
 		</action>
 
+		<action name="editTaskFreq" class="com.c2pi.notify.action.TaskFreqAction" method="edit">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.excludeMethods">edit</param>
+			</interceptor-ref>
+			<result name="error" type="tiles">taskfreq.def</result>
+			<result name="input" type="tiles">taskfreq.def</result>
+		</action>
+		
+		<action name="deleteTaskFreq" class="com.c2pi.notify.action.TaskFreqAction"	method="delete">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.excludeMethods">delete</param>
+			</interceptor-ref>
+			<result name="error" type="tiles">taskfreq.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+		</action>
+
+		<!-- Task Frequency -->
 		<action name="task" class="com.c2pi.notify.action.TaskAction">
 
-			<result name="error">taskform.jsp</result>
+			<result name="error">jsp/taskform.jsp</result>
 			<result name="input" type="tiles">task.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -86,7 +96,7 @@
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getTaskNTfList</param>
 			</interceptor-ref>
-			<result name="error">taskform.jsp</result>
+			<result name="error">jsp/taskform.jsp</result>
 			<result name="input" type="tiles">task.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -95,7 +105,7 @@
 
 		<action name="notifytask" class="com.c2pi.notify.action.NotifyTaskAction">
 
-			<result name="error">notifytaskform.jsp</result>
+			<result name="error">jsp/notifytaskform.jsp</result>
 			<result name="input" type="tiles">notifytask.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -108,7 +118,7 @@
 				<param name="validation.excludeMethods">getEmpTaskNameNEtnList</param>
 			</interceptor-ref>
 
-			<result name="error">notifytaskform.jsp</result>
+			<result name="error">jsp/notifytaskform.jsp</result>
 			<result name="input" type="tiles">notifytask.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -117,20 +127,37 @@
 
 		<action name="employee" class="com.c2pi.notify.action.EmployeeAction">
 
-			<result name="error">employeeform.jsp</result>
+			<result name="error">jsp/employeeform.jsp</result>
 			<result name="input" type="tiles">employee.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
 			<result name="team" type="tiles">team.welcome.def</result>
 		</action>
-
+		<!-- Edit Employee -->
+		<action name="saveOrUpdateEmp" method="saveOrUpdate"
+			class="com.c2pi.notify.action.EmployeeEditAction">
+			<result name="success" type="redirect">employeeeditform</result>
+		</action>
+		<action name="employeeeditform" method="list"
+			class="com.c2pi.notify.action.EmployeeEditAction">
+			<result name="success">/jsp/employeeeditform.jsp</result>
+		</action>
+		<action name="editEmp" method="edit"
+			class="com.c2pi.notify.action.EmployeeEditAction">
+			<result name="success">/jsp/employeeeditform.jsp</result>
+		</action>
+		<action name="deleteEmp" method="delete"
+			class="com.c2pi.notify.action.EmployeeEditAction">
+			<result name="success" type="redirect">employeeeditform</result>
+		</action>
+		<!-- Edit Employee -->
 		<action name="employeeform" class="com.c2pi.notify.action.EmployeeAction"
 			method="getEmployeeList">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getEmployeeList</param>
 			</interceptor-ref>
 
-			<result name="error">employeeform.jsp</result>
+			<result name="error">jsp/employeeform.jsp</result>
 			<result name="input" type="tiles">employee.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -140,7 +167,7 @@
 
 		<action name="projectemployees" class="com.c2pi.notify.action.ProjectEmployeeAction">
 
-			<result name="error">projectemployeesform.jsp</result>
+			<result name="error">jsp/projectemployeesform.jsp</result>
 			<result name="input" type="tiles">projectemployees.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -153,7 +180,7 @@
 				<param name="validation.excludeMethods">getProjNEmpNProjEmpList</param>
 			</interceptor-ref>
 
-			<result name="error">projectemployeesform.jsp</result>
+			<result name="error">jsp/projectemployeesform.jsp</result>
 			<result name="input" type="tiles">projectemployees.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -162,7 +189,7 @@
 		<action name="employeestasks" class="com.c2pi.notify.action.EmployeeTaskAction">
 
 
-			<result name="error">employeestasksform.jsp</result>
+			<result name="error">jsp/employeestasksform.jsp</result>
 			<result name="input" type="tiles">employeestasks.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -175,7 +202,7 @@
 				<param name="validation.excludeMethods">getEmpNTaskNEmpTaskList</param>
 			</interceptor-ref>
 
-			<result name="error">employeestasksform.jsp</result>
+			<result name="error">jsp/employeestasksform.jsp</result>
 			<result name="input" type="tiles">employeestasks.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -184,19 +211,19 @@
 		<!-- Projects start -->
 
 		<action name="projects" class="com.c2pi.notify.action.ProjectAction">
-			<result name="error">projectsform.jsp</result>
+			<result name="error">jsp/projectsform.jsp</result>
 			<result name="input" type="tiles">projects.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
 			<result name="team" type="tiles">team.welcome.def</result>
 		</action>
-		
+
 		<action name="projectform" class="com.c2pi.notify.action.ProjectAction"
 			method="getProjNEmpList">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getProjNEmpList</param>
 			</interceptor-ref>
-			<result name="error">projectsform.jsp</result>
+			<result name="error">jsp/projectsform.jsp</result>
 			<result name="input" type="tiles">projects.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -205,7 +232,7 @@
 		<!-- Projects end -->
 
 		<action name="user" class="com.c2pi.notify.action.UserAction">
-			<result name="error">userform.jsp</result>
+			<result name="error">jsp/userform.jsp</result>
 			<result name="input" type="tiles">user.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -216,7 +243,7 @@
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getUserNEmpList</param>
 			</interceptor-ref>
-			<result name="error">userform.jsp</result>
+			<result name="error">jsp/userform.jsp</result>
 			<result name="input" type="tiles">user.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -228,7 +255,7 @@
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">employeerole</param>
 			</interceptor-ref>
-			<result name="error">employeeroleform.jsp</result>
+			<result name="error">jsp/employeeroleform.jsp</result>
 			<result name="input" type="tiles">employeerole.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -240,7 +267,7 @@
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getEmpNRole</param>
 			</interceptor-ref>
-			<result name="error">employeeroleform.jsp</result>
+			<result name="error">jsp/employeeroleform.jsp</result>
 			<result name="input" type="tiles">employeerole.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -248,7 +275,7 @@
 		</action>
 
 		<action name="menu" class="com.c2pi.notify.action.MenuAction">
-			<result name="error">menuform.jsp</result>
+			<result name="error">jsp/menuform.jsp</result>
 			<result name="input" type="tiles">menu.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>
@@ -259,7 +286,7 @@
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getMenuList</param>
 			</interceptor-ref>
-			<result name="error">menuform.jsp</result>
+			<result name="error">jsp/menuform.jsp</result>
 			<result name="input" type="tiles">menu.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 			<result name="manager" type="tiles">manager.welcome.def</result>

@@ -5,148 +5,148 @@
 
 <tiles-definitions>
 
-	<definition name="login.def" template="layout.jsp">
+	<definition name="login.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is login Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/mainmenu.jsp" />
-		<put-attribute name="body" value="/loginform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/mainmenu.jsp" />
+		<put-attribute name="body" value="/jsp/loginform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 
-	<definition name="role.def" template="layout.jsp">
+	<definition name="role.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is Role Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/admin_menu.jsp" />
-		<put-attribute name="body" value="/roleform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/admin_menu.jsp" />
+		<put-attribute name="body" value="/jsp/roleform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 
-	<definition name="taskfreq.def" template="layout.jsp">
+	<definition name="taskfreq.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is TaskFreq Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/admin_menu.jsp" />
-		<put-attribute name="body" value="/taskfreqform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/admin_menu.jsp" />
+		<put-attribute name="body" value="/jsp/taskfreqform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 
-	<definition name="task.def" template="layout.jsp">
+	<definition name="task.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is Task Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/admin_menu.jsp" />
-		<put-attribute name="body" value="/taskform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/admin_menu.jsp" />
+		<put-attribute name="body" value="/jsp/taskform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 
-	<definition name="notifytask.def" template="layout.jsp">
+	<definition name="notifytask.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is Notify Task Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/team_menu.jsp" />
-		<put-attribute name="body" value="/notifytaskform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/team_menu.jsp" />
+		<put-attribute name="body" value="/jsp/notifytaskform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 
-	<definition name="manager.welcome.def" template="layout.jsp">
+	<definition name="manager.welcome.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="Welcome Manger" type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/manager_menu.jsp" />
-		<put-attribute name="body" value="/body.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/manager_menu.jsp" />
+		<put-attribute name="body" value="/jsp/body.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 
-	<definition name="admin.welcome.def" template="layout.jsp">
+	<definition name="admin.welcome.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="Welcome Admin" type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/admin_menu.jsp" />
-		<put-attribute name="body" value="/body.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/admin_menu.jsp" />
+		<put-attribute name="body" value="/jsp/body.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 
 	<definition name="team.welcome.def" extends="manager.welcome.def">
 		<put-attribute name="title" value="Welcome Team" type="string" />
-		<put-attribute name="menu" value="/team_menu.jsp" />
+		<put-attribute name="menu" value="/jsp/team_menu.jsp" />
 	</definition>
 
 	<definition name="manager.def" extends="manager.welcome.def">
 		<put-attribute name="title" value="Manager Action" type="string" />
-		<put-attribute name="body" value="/actionbody.jsp" />
+		<put-attribute name="body" value="/jsp/actionbody.jsp" />
 	</definition>
 
 	<definition name="admin.def" extends="admin.welcome.def">
 		<put-attribute name="title" value="Admin Action" type="string" />
-		<put-attribute name="body" value="/actionbody.jsp" />
+		<put-attribute name="body" value="/jsp/actionbody.jsp" />
 	</definition>
 
 	<definition name="team.def" extends="manager.def">
 		<put-attribute name="title" value="Team Action" type="string" />
-		<put-attribute name="menu" value="/team_menu.jsp" />
+		<put-attribute name="menu" value="/jsp/team_menu.jsp" />
 	</definition>
 
-	<definition name="employee.def" template="layout.jsp">
+	<definition name="employee.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is employee Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/admin_menu.jsp" />
-		<put-attribute name="body" value="/employeeform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/admin_menu.jsp" />
+		<put-attribute name="body" value="/jsp/employeeform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 
-	<definition name="projectemployees.def" template="layout.jsp">
+	<definition name="projectemployees.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is Project Employees Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/manager_menu.jsp" />
-		<put-attribute name="body" value="/projectemployeesform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/manager_menu.jsp" />
+		<put-attribute name="body" value="/jsp/projectemployeesform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 
-	<definition name="employeestasks.def" template="layout.jsp">
+	<definition name="employeestasks.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is Employees Tasks Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/manager_menu.jsp" />
-		<put-attribute name="body" value="/employeestasksform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/manager_menu.jsp" />
+		<put-attribute name="body" value="/jsp/employeestasksform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 	<!-- Projects page start -->
-	<definition name="projects.def" template="layout.jsp">
+	<definition name="projects.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is Projects Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/admin_menu.jsp" />
-		<put-attribute name="body" value="/projectsform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/admin_menu.jsp" />
+		<put-attribute name="body" value="/jsp/projectsform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 	<!-- Projects page end -->
 
-	<definition name="user.def" template="layout.jsp">
+	<definition name="user.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is user Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/admin_menu.jsp" />
-		<put-attribute name="body" value="/userform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/admin_menu.jsp" />
+		<put-attribute name="body" value="/jsp/userform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
-	<definition name="employeerole.def" template="layout.jsp">
+	<definition name="employeerole.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is Employee Role Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/admin_menu.jsp" />
-		<put-attribute name="body" value="/employeeroleform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/admin_menu.jsp" />
+		<put-attribute name="body" value="/jsp/employeeroleform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 
-	<definition name="menu.def" template="layout.jsp">
+	<definition name="menu.def" template="/jsp/layout.jsp">
 		<put-attribute name="title" value="This is Menu Page"
 			type="string" />
-		<put-attribute name="header" value="/header.jsp" />
-		<put-attribute name="menu" value="/admin_menu.jsp" />
-		<put-attribute name="body" value="/menuform.jsp" />
-		<put-attribute name="footer" value="/footer.jsp" />
+		<put-attribute name="header" value="/jsp/header.jsp" />
+		<put-attribute name="menu" value="/jsp/admin_menu.jsp" />
+		<put-attribute name="body" value="/jsp/menuform.jsp" />
+		<put-attribute name="footer" value="/jsp/footer.jsp" />
 	</definition>
 
 

@@ -1,5 +1,6 @@
 package com.c2pi.notify.service;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,11 +17,24 @@ import com.c2pi.notify.dao.NotifyTaskDAO;
 import com.c2pi.notify.entity.EmployeesTaskNotification;
 import com.c2pi.notify.entity.Task;
 
+/**
+ * @author Shailendrak
+ * 
+ */
 public class NotifyTaskManager {
 	NotifyTaskDAO ntdao = null;
 
+	/**
+	 * @param empID
+	 * @param empTask
+	 * @param periodDate
+	 * @param createdBy
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws IOException 
+	 */
 	public String addNotifyTask(int empID, Integer[] empTask, Date periodDate,
-			String createdBy) {
+			String createdBy) throws ClassNotFoundException, IOException {
 		String res = "";
 		ntdao = new NotifyTaskDAO();
 
@@ -33,48 +47,48 @@ public class NotifyTaskManager {
 		return res;
 	}
 
-	public ArrayList<EmployeesTaskNotification> getEtnList(String loginID) {
+	/**
+	 * @param loginID
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws IOException 
+	 */
+	public ArrayList<EmployeesTaskNotification> getEtnList(String loginID)
+			throws ClassNotFoundException, SQLException, IOException {
 
 		ArrayList<EmployeesTaskNotification> etnList = null;
 		ntdao = new NotifyTaskDAO();
 
-		try {
-			etnList = ntdao.getETNList(loginID);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		etnList = ntdao.getETNList(loginID);
 
 		return etnList;
 	}
 
-	public ArrayList<Task> getEmpTaskList(String loginID) {
+	public ArrayList<Task> getEmpTaskList(String loginID)
+			throws ClassNotFoundException, SQLException, IOException {
 
 		ArrayList<Task> empTaskList = null;
 		ntdao = new NotifyTaskDAO();
 
-		try {
-			System.out.println("getemptasklist ...");
-			empTaskList = ntdao.getEmpTaskList(loginID);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println("getemptasklist ...");
+		empTaskList = ntdao.getEmpTaskList(loginID);
 
 		return empTaskList;
 	}
 
-	public String sendNotifyEmail(Integer[] empTask, int empID) throws SQLException {
+	public String sendNotifyEmail(Integer[] empTask, int empID)
+			throws SQLException, ClassNotFoundException, IOException {
 		String res = "SUCCESS: Email Sent..";
 
 		final String from = "shailendrarsingh@gmail.com";
 		final String password = "Q1az2wsx";
 		String to = "shailendra1603@yahoo.com";
 		String subject = "Test - Notify Tasks";
-		
+
 		ntdao = new NotifyTaskDAO();
 		to = ntdao.getMgrEmail(empID);
-		System.out.println("email :"+to);		
+		System.out.println("email :" + to);
 		String taskName = ntdao.getTaskName(empTask);
 		String body = "Dear Sir, This is to inform that I have completed these tasks.  ";
 		body = body + taskName;
@@ -115,4 +129,11 @@ public class NotifyTaskManager {
 
 		return res;
 	}
+	public ArrayList<String> getDateList() throws ClassNotFoundException, SQLException, IOException {
+			ArrayList<String> dateList= null;
+			ntdao = new NotifyTaskDAO();
+			dateList=ntdao.getDateList();
+			return dateList;
+		}
+	
 }
