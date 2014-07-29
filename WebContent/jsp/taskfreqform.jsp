@@ -61,6 +61,8 @@
 							onClick="return confirm('Do you want to delete these items?')">
 							<img height="20" width="20"
 								src="<s:url value="/img/delete_image.jpg"/>" />
+								
+								
 						</s:a></td>
 				</tr>
 			</s:iterator>
