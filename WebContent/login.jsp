@@ -11,5 +11,6 @@
 
 	<tiles:insertDefinition name="login.def" />
 	<div>test arb1</div>
+	<p>added test paragraph</p>
 </body>
 </html>
