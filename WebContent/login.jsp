@@ -10,6 +10,6 @@
 <body>
 
 	<tiles:insertDefinition name="login.def" />
-	<div>test arb</div>
+	<div>test arb1</div>
 </body>
 </html>
