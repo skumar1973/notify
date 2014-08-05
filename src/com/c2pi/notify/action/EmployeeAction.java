@@ -45,7 +45,7 @@ public class EmployeeAction extends ActionSupport implements
 	public String execute() {
 
 		String result = "";
-		logger.debug("employee action execute method..");
+		logger.info("employee action execute method..");
 
 		empMgr = new EmployeeManager();
 
@@ -53,15 +53,15 @@ public class EmployeeAction extends ActionSupport implements
 			sessionMap.remove("result");
 		logger.info("Employee" + employee);
 		System.out.println("check valid login start..");
-		logger.debug("check valid login start..");
+		logger.info("check valid login start..");
 		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
 				|| ((Integer) sessionMap.get("empID")) == 0) {
-			logger.debug("ERROR: check valid login..  failed..");
+			logger.info("ERROR: check valid login..  failed..");
 			this.addActionError(getText("app.error"));
 			return ERROR;
 		}
 
-		logger.debug("calling method addEmployee..");
+		logger.info("calling method addEmployee..");
 		try {
 			result = empMgr.addEmployee(employee);
 		} catch (SQLException e) {

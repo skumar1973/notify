@@ -70,8 +70,7 @@ public class TaskFreqAction extends ActionSupport implements SessionAware,
 				res = tfManager.AddTaskFreq(taskFreq);
 			} catch (ClassNotFoundException e) {
 				logger.error("ERROR-" + e.getMessage());
-				e.printStackTrace();
-				this.addActionError(getText("app.error"));
+				e.printStackTrace();this.addActionError(getText("app.error"));
 				return ERROR;
 			} catch (SQLException e) {
 				logger.error("ERROR-" + e.getMessage());
@@ -147,6 +146,9 @@ public class TaskFreqAction extends ActionSupport implements SessionAware,
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.opensymphony.xwork2.Preparable#prepare()
+	 */
 	public void prepare() {
 		System.out.println("TaskFreq action prepare method");
 
@@ -181,6 +183,9 @@ public class TaskFreqAction extends ActionSupport implements SessionAware,
 		return "input";
 	}
 
+	/**
+	 * @return
+	 */
 	public String edit() {
 		HttpServletRequest request = (HttpServletRequest) ActionContext
 				.getContext().get(ServletActionContext.HTTP_REQUEST);
@@ -213,6 +218,9 @@ public class TaskFreqAction extends ActionSupport implements SessionAware,
 		return "input";
 	}
 
+	/**
+	 * @return
+	 */
 	public String delete() {
 		String res=null;
 

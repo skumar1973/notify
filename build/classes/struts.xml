@@ -48,31 +48,35 @@
 			<result name="manager" type="tiles">manager.welcome.def</result>
 			<result name="team" type="tiles">team.welcome.def</result>
 		</action>
-		
+
 		<!-- Task Frequency -->
-		<action name="taskfreq" class="com.c2pi.notify.action.TaskFreqAction" method="execute">
+		<action name="taskfreq" class="com.c2pi.notify.action.TaskFreqAction"
+			method="execute">
 			<result name="error" type="tiles">taskfreq.def</result>
 			<result name="input" type="tiles">taskfreq.def</result>
-			<result name="admin" type="tiles">admin.welcome.def</result>		
+			<result name="admin" type="tiles">admin.welcome.def</result>
 		</action>
 
-		<action name="taskfreqform" class="com.c2pi.notify.action.TaskFreqAction" method="getTaskFreqList">
+		<action name="taskfreqform" class="com.c2pi.notify.action.TaskFreqAction"
+			method="getTaskFreqList">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getTaskFreqList</param>
 			</interceptor-ref>
 			<result name="error" type="tiles">taskfreq.def</result>
-			<result name="input" type="tiles">taskfreq.def</result>		
+			<result name="input" type="tiles">taskfreq.def</result>
 		</action>
 
-		<action name="editTaskFreq" class="com.c2pi.notify.action.TaskFreqAction" method="edit">
+		<action name="editTaskFreq" class="com.c2pi.notify.action.TaskFreqAction"
+			method="edit">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">edit</param>
 			</interceptor-ref>
 			<result name="error" type="tiles">taskfreq.def</result>
 			<result name="input" type="tiles">taskfreq.def</result>
 		</action>
-		
-		<action name="deleteTaskFreq" class="com.c2pi.notify.action.TaskFreqAction"	method="delete">
+
+		<action name="deleteTaskFreq" class="com.c2pi.notify.action.TaskFreqAction"
+			method="delete">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">delete</param>
 			</interceptor-ref>
@@ -211,11 +215,10 @@
 		<!-- Projects start -->
 
 		<action name="projects" class="com.c2pi.notify.action.ProjectAction">
-			<result name="error">jsp/projectsform.jsp</result>
+			<result name="error" type="tiles">projects.def</result>
 			<result name="input" type="tiles">projects.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
-			<result name="manager" type="tiles">manager.welcome.def</result>
-			<result name="team" type="tiles">team.welcome.def</result>
+
 		</action>
 
 		<action name="projectform" class="com.c2pi.notify.action.ProjectAction"
@@ -223,12 +226,33 @@
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getProjNEmpList</param>
 			</interceptor-ref>
-			<result name="error">jsp/projectsform.jsp</result>
+			<result name="error" type="tiles">projects.def</result>
 			<result name="input" type="tiles">projects.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
-			<result name="manager" type="tiles">manager.welcome.def</result>
-			<result name="team" type="tiles">team.welcome.def</result>
+
 		</action>
+
+		<action name="editProject" class="com.c2pi.notify.action.ProjectAction"
+			method="editProject">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.excludeMethods">editProject</param>
+			</interceptor-ref>
+			<result name="error" type="tiles">projects.def</result>
+			<result name="input" type="tiles">projects.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+
+		</action>
+		
+		<action name="deleteProject" class="com.c2pi.notify.action.ProjectAction"
+			method="deleteProject">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.excludeMethods">deleteProject</param>
+			</interceptor-ref>
+			<result name="error" type="tiles">projects.def</result>
+			<result name="input" type="tiles">projects.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+		</action>
+		
 		<!-- Projects end -->
 
 		<action name="user" class="com.c2pi.notify.action.UserAction">
