@@ -8,11 +8,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.c2pi.notify.entity.Employee;
 import com.c2pi.notify.service.EmployeeManager;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -24,7 +29,7 @@ public class EmployeeAction extends ActionSupport implements
 		ModelDriven<Employee>, SessionAware {
 
 	private static final long serialVersionUID = 1L;
-	private ArrayList<Employee> empList = null;
+	private ArrayList<Employee> empList = new ArrayList<Employee>();
 	private EmployeeManager empMgr = null;
 	private Employee employee = new Employee();
 
@@ -94,15 +99,25 @@ public class EmployeeAction extends ActionSupport implements
 	@Override
 	public Employee getModel() {
 
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().get(ServletActionContext.HTTP_REQUEST);
+
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String fmtDate = dateFormat.format(date);
 		String loginid = (String) sessionMap.get("loginID");
-		employee.setUpdatedDt(fmtDate);
-		employee.setCreatedDt(fmtDate);
-		employee.setCreatedBy(loginid);
-		employee.setUpdatedBy(loginid);
-
+		//save
+		if ((request.getParameter("id") == null)
+				|| (Integer.parseInt(request.getParameter("id")) == 0)) {
+			employee.setCreatedDt(fmtDate);
+			employee.setCreatedBy(loginid);
+			employee.setUpdatedDt(fmtDate);
+			employee.setUpdatedBy(loginid);
+		} else {
+//update
+			employee.setUpdatedDt(fmtDate);
+			employee.setUpdatedBy(loginid);
+		}
 		return employee;
 	}
 
@@ -155,6 +170,48 @@ public class EmployeeAction extends ActionSupport implements
 			this.addFieldError("firstName", getText("app.error"));
 		}
 		return "input";
+	}
+
+	public String edit() {
+		empMgr = new EmployeeManager();
+
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().get(ServletActionContext.HTTP_REQUEST);
+
+		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
+				|| ((Integer) sessionMap.get("empID")) == 0) {
+			logger.info("ERROR: checking valid login..  failed..");
+			this.addActionError(getText("app.notloggedin.error"));
+			return ERROR;
+		} else {
+			logger.info("checking valid login.. complete..");
+
+			try {
+				employee = empMgr.getEmployeeById(Integer.parseInt(request.getParameter("id")));
+			} catch (NumberFormatException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (ClassNotFoundException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (SQLException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (IOException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			}
+
+			return "input";
+		}
 	}
 
 	public ArrayList<Employee> getEmpList() {

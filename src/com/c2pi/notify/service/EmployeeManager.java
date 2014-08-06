@@ -13,7 +13,9 @@ import com.c2pi.notify.entity.Employee;
  */
 public class EmployeeManager {
 
+	private Employee emp = null;
 	private EmployeeDAO edao = null;
+	ArrayList<Employee> empList = null;
 
 	/**
 	 * @param employee
@@ -41,5 +43,15 @@ public class EmployeeManager {
 		edao = new EmployeeDAO();
 		empList = edao.getEmpList();
 		return empList;
+	}
+
+	public Employee getEmployeeById(int empID) throws SQLException,
+			ClassNotFoundException, IOException {
+		System.out.println("Employee get list method..");
+		edao = new EmployeeDAO();
+		emp = edao.getEmployeeById(empID);
+		System.out.println("EmpList" + empList);
+		return emp;
+
 	}
 }

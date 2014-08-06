@@ -61,7 +61,7 @@ public class TaskFreqAction extends ActionSupport implements SessionAware,
 		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
 				|| ((Integer) sessionMap.get("empID")) == 0) {
 			logger.info("ERROR: checking valid login..  failed..");
-			this.addActionError(getText("app.error"));
+			this.addActionError(getText("app.notloggedin.error"));
 			return ERROR;
 		} else {
 			logger.info("checking valid login.. complete..");
@@ -70,7 +70,8 @@ public class TaskFreqAction extends ActionSupport implements SessionAware,
 				res = tfManager.AddTaskFreq(taskFreq);
 			} catch (ClassNotFoundException e) {
 				logger.error("ERROR-" + e.getMessage());
-				e.printStackTrace();this.addActionError(getText("app.error"));
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
 				return ERROR;
 			} catch (SQLException e) {
 				logger.error("ERROR-" + e.getMessage());
@@ -86,9 +87,8 @@ public class TaskFreqAction extends ActionSupport implements SessionAware,
 
 			sessionMap.put("result", res);
 			return "admin";
-			
+
 		}
-		
 
 	}
 
@@ -108,7 +108,8 @@ public class TaskFreqAction extends ActionSupport implements SessionAware,
 		String fmtDate = dateFormat.format(date);
 		String loginid = (String) sessionMap.get("loginID");
 		// save
-		if ((request.getParameter("id")==null)||(Integer.parseInt(request.getParameter("id")) == 0)) {
+		if ((request.getParameter("id") == null)
+				|| (Integer.parseInt(request.getParameter("id")) == 0)) {
 			taskFreq.setCreatedDt(fmtDate);
 			taskFreq.setCreatedBy(loginid);
 			taskFreq.setUpdatedDt(fmtDate);
@@ -129,24 +130,26 @@ public class TaskFreqAction extends ActionSupport implements SessionAware,
 	public void validate() {
 		System.out.println("TaskFreq action validate");
 		if ((taskFreq.getName() == null) || (taskFreq.getName().length() == 0)) {
-			System.out.println("taskFreq.getName()="+taskFreq.getName());
+			System.out.println("taskFreq.getName()=" + taskFreq.getName());
 			this.addFieldError("name", getText("app.taskfreq.name.blank"));
-//			try {
-//				tfList = tfManager.getTaskFreqList();
-//			} catch (SQLException e) {
-//				logger.error("ERROR:" + e.getMessage());
-//				e.printStackTrace();
-//			} catch (ClassNotFoundException e) {
-//				logger.error("ERROR-" + e.getMessage());
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				logger.error("ERROR:" + e.getMessage());
-//				e.printStackTrace();
-//			}
+			// try {
+			// tfList = tfManager.getTaskFreqList();
+			// } catch (SQLException e) {
+			// logger.error("ERROR:" + e.getMessage());
+			// e.printStackTrace();
+			// } catch (ClassNotFoundException e) {
+			// logger.error("ERROR-" + e.getMessage());
+			// e.printStackTrace();
+			// } catch (IOException e) {
+			// logger.error("ERROR:" + e.getMessage());
+			// e.printStackTrace();
+			// }
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.opensymphony.xwork2.Preparable#prepare()
 	 */
 	public void prepare() {
@@ -190,77 +193,87 @@ public class TaskFreqAction extends ActionSupport implements SessionAware,
 		HttpServletRequest request = (HttpServletRequest) ActionContext
 				.getContext().get(ServletActionContext.HTTP_REQUEST);
 
-		try {
-			taskFreq = tfManager.getTaskFreqById(Integer.parseInt(request
-					.getParameter("id")));
-		} catch (NumberFormatException e) {
-			logger.error("ERROR-" + e.getMessage());
-			e.printStackTrace();
-			this.addActionError(getText("app.error"));
+		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
+				|| ((Integer) sessionMap.get("empID")) == 0) {
+			logger.info("ERROR: checking valid login..  failed..");
+			this.addActionError(getText("app.notloggedin.error"));
 			return ERROR;
-		} catch (ClassNotFoundException e) {
-			logger.error("ERROR-" + e.getMessage());
-			e.printStackTrace();
-			this.addActionError(getText("app.error"));
-			return ERROR;
-		} catch (SQLException e) {
-			logger.error("ERROR-" + e.getMessage());
-			e.printStackTrace();
-			this.addActionError(getText("app.error"));
-			return ERROR;
-		} catch (IOException e) {
-			logger.error("ERROR-" + e.getMessage());
-			e.printStackTrace();
-			this.addActionError(getText("app.error"));
-			return ERROR;
+		} else {
+			logger.info("checking valid login.. complete..");
+
+			try {
+				taskFreq = tfManager.getTaskFreqById(Integer.parseInt(request
+						.getParameter("id")));
+			} catch (NumberFormatException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (ClassNotFoundException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (SQLException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (IOException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			}
+
+			return "input";
 		}
-		
-		return "input";
 	}
 
 	/**
 	 * @return
 	 */
 	public String delete() {
-		String res=null;
+		String res = null;
 
 		logger.info("checking valid login.. start..");
 		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
 				|| ((Integer) sessionMap.get("empID")) == 0) {
 			logger.info("ERROR: checking valid login..  failed..");
-			this.addActionError(getText("app.error"));
+			this.addActionError(getText("app.notloggedin.error"));
 			return ERROR;
 		} else {
-		
-		HttpServletRequest request = (HttpServletRequest) ActionContext
-				.getContext().get(ServletActionContext.HTTP_REQUEST);
-		sessionMap.remove("result");
-		try {
-			res=tfManager.deleteTF(Integer.parseInt(request.getParameter("id")));
-		} catch (NumberFormatException e) {
-			logger.error("ERROR-" + e.getMessage());
-			e.printStackTrace();
-			this.addActionError(getText("app.error"));
-			return ERROR;
-		} catch (ClassNotFoundException e) {
-			logger.error("ERROR-" + e.getMessage());
-			e.printStackTrace();
-			this.addActionError(getText("app.error"));
-			return ERROR;
-		} catch (SQLException e) {
-			logger.error("ERROR-" + e.getMessage());
-			e.printStackTrace();
-			this.addActionError(getText("app.error"));
-			return ERROR;
-		} catch (IOException e) {
-			logger.error("ERROR-" + e.getMessage());
-			e.printStackTrace();
-			this.addActionError(getText("app.error"));
-			return ERROR;
+
+			HttpServletRequest request = (HttpServletRequest) ActionContext
+					.getContext().get(ServletActionContext.HTTP_REQUEST);
+			sessionMap.remove("result");
+			try {
+				res = tfManager.deleteTF(Integer.parseInt(request
+						.getParameter("id")));
+			} catch (NumberFormatException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (ClassNotFoundException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (SQLException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (IOException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			}
+			sessionMap.put("result", res);
+			return "admin";
 		}
-		sessionMap.put("result", res);
-		return "admin";
-		}		
 	}
 
 	public ArrayList<TaskFrequency> getTfList() {

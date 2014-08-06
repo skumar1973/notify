@@ -13,10 +13,7 @@
 		<tr>
 			<td align="left"><a href="employeeform.action">Employees</a></td>
 		</tr>
-		<tr>
-			<td align="left"><a href="employeeeditform.action">SaveOrUpdateEmp</a></td>
-		</tr>
-
+		
 		<tr>
 			<td align="left"><a href="userform.action">Users</a></td>
 		</tr>				
@@ -39,7 +36,7 @@
 			<td align="left"><a href="menuform.action">Menus</a></td>
 		</tr>				
 		<tr>
-			<td align="left"><a href="admin.action">Roles Menu</a></td>
+			<td align="left"><a href="rolemenuform">Roles Menu</a></td>
 		</tr>
 		<tr>
 			<td align="left"><a href="logoff.action">Logoff</a></td>

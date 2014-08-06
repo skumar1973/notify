@@ -129,46 +129,43 @@
 			<result name="team" type="tiles">team.welcome.def</result>
 		</action>
 
-		<action name="employee" class="com.c2pi.notify.action.EmployeeAction">
-
-			<result name="error">jsp/employeeform.jsp</result>
-			<result name="input" type="tiles">employee.def</result>
-			<result name="admin" type="tiles">admin.welcome.def</result>
-			<result name="manager" type="tiles">manager.welcome.def</result>
-			<result name="team" type="tiles">team.welcome.def</result>
-		</action>
-		<!-- Edit Employee -->
-		<action name="saveOrUpdateEmp" method="saveOrUpdate"
-			class="com.c2pi.notify.action.EmployeeEditAction">
-			<result name="success" type="redirect">employeeeditform</result>
-		</action>
-		<action name="employeeeditform" method="list"
-			class="com.c2pi.notify.action.EmployeeEditAction">
-			<result name="success">/jsp/employeeeditform.jsp</result>
-		</action>
-		<action name="editEmp" method="edit"
-			class="com.c2pi.notify.action.EmployeeEditAction">
-			<result name="success">/jsp/employeeeditform.jsp</result>
-		</action>
-		<action name="deleteEmp" method="delete"
-			class="com.c2pi.notify.action.EmployeeEditAction">
-			<result name="success" type="redirect">employeeeditform</result>
-		</action>
-		<!-- Edit Employee -->
-		<action name="employeeform" class="com.c2pi.notify.action.EmployeeAction"
-			method="getEmployeeList">
+<!-- Employee form -->
+		<action name="employeeform" class="com.c2pi.notify.action.EmployeeAction" method="getEmployeeList">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getEmployeeList</param>
 			</interceptor-ref>
+			<result name="error" type="tiles">employee.def</result>
+			<result name="input" type="tiles">employee.def</result>
 
-			<result name="error">jsp/employeeform.jsp</result>
+		</action>
+		
+		<action name="employee" class="com.c2pi.notify.action.EmployeeAction" method="execute">
+
+			<result name="error" type="tiles">employee.def</result>
 			<result name="input" type="tiles">employee.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
-			<result name="manager" type="tiles">manager.welcome.def</result>
-			<result name="team" type="tiles">team.welcome.def</result>
 		</action>
-
-
+		
+		<action name="editEmployee" class="com.c2pi.notify.action.EmployeeAction"  method="edit">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.excludeMethods">edit</param>
+			</interceptor-ref>
+			<result name="error" type="tiles">employee.def</result>
+			<result name="input" type="tiles">employee.def</result>
+			
+		</action>
+	
+		<action name="deleteEmployee" class="com.c2pi.notify.action.EmployeeAction"  method="delete">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.excludeMethods">delete</param>
+			</interceptor-ref>
+			<result name="error" type="tiles">employee.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			
+		</action>
+	
+	<!-- Employee form end -->
+	
 		<action name="projectemployees" class="com.c2pi.notify.action.ProjectEmployeeAction">
 
 			<result name="error">jsp/projectemployeesform.jsp</result>
@@ -317,5 +314,47 @@
 			<result name="team" type="tiles">team.welcome.def</result>
 		</action>
 
+		<!-- rolemenuform -->
+
+		<action name="rolemenuform" class="com.c2pi.notify.action.RoleMenuAction"
+			method="getList">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.excludeMethods">getRoleMenu</param>
+			</interceptor-ref>
+			<result name="error" type="tiles">rolemenu.def</result>
+			<result name="input" type="tiles">rolemenu.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+
+		</action>
+		
+		
+		<action name="rolemenu" class="com.c2pi.notify.action.RoleMenuAction"
+			method="execute">
+			
+			<result name="error" type="tiles">rolemenu.def</result>
+			<result name="input" type="tiles">rolemenu.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+
+		</action>
+		
+		<action name="editrolemenu" class="com.c2pi.notify.action.RoleMenuAction"
+			method="edit">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.excludeMethods">edit</param>
+			</interceptor-ref>
+			<result name="error" type="tiles">rolemenu.def</result>
+			<result name="input" type="tiles">rolemenu.def</result>
+		</action>
+		
+		<action name="deleterolemenu" class="com.c2pi.notify.action.RoleMenuAction"
+			method="delete">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.excludeMethods">delete</param>
+			</interceptor-ref>
+			<result name="error" type="tiles">rolemenu.def</result>
+			<result name="input" type="tiles">rolemenu.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+		</action>
+		<!-- rolemenuform -->
 	</package>
 </struts> 
