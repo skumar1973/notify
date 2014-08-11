@@ -7,6 +7,7 @@ public class Task {
 	private String desc;
 	private String status;
 	private int freqID;
+	private String freqName;
 	private String createdDt;
 	private String createdBy;
 	private String updatedDt;
@@ -82,6 +83,14 @@ public class Task {
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public String getFreqName() {
+		return freqName;
+	}
+
+	public void setFreqName(String freqName) {
+		this.freqName = freqName;
 	}
 
 }
