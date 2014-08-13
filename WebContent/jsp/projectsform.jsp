@@ -26,7 +26,7 @@
 							<%-- <s:hidden name="updatedDt" />
 							<s:hidden name="updatedBy" /> --%>
 						<%-- <s:textfield name="status" key="app.projects.status" /> --%>
-						<s:submit value="Add Projects/Update Projects"
+						<s:submit value="Save/Update Projects"
 							onClick="return confirm('Do you want to continue?')" />
 					</s:push>
 
@@ -59,13 +59,15 @@
 								<td><s:property value="updatedBy" /></td>
 								<td><s:url id="editURL" action="editProject">
 										<s:param name="id" value="%{id}"></s:param>
-									</s:url> <s:a href="%{editURL}">
+									</s:url> <s:a href="%{editURL}" 
+									onClick="return confirm('Do you want to continue?')">
 										<img height="20" width="20"
 											src="<s:url value="/img/edit_image.jpg"/>" />
 									</s:a></td>
-								<td><s:url id="deleteURL" action="deleteProject">
+								<td><s:url id="deleteURL" action="deleteProject" >
 										<s:param name="id" value="%{id}"></s:param>
-									</s:url> <s:a href="%{deleteURL}">
+									</s:url> <s:a href="%{deleteURL}" 
+									onClick="return confirm('Do you want to delete these items?')">
 										<img height="20" width="20"
 											src="<s:url value="/img/delete_image.jpg"/>" />
 									</s:a></td>

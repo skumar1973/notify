@@ -38,7 +38,7 @@ public class ProjectAction extends ActionSupport implements SessionAware,
 	private ArrayList<Project> projList = new ArrayList<Project>();
 	private ArrayList<Employee> empList = new ArrayList<Employee>();
 	private ProjectManager pm = null;
-//	private Project editproj=null;
+	// private Project editproj=null;
 
 	Logger logger = Logger.getLogger(ProjectAction.class.getName());
 	Map<String, Object> sessionMap;
@@ -52,28 +52,57 @@ public class ProjectAction extends ActionSupport implements SessionAware,
 	 * @return
 	 * @throws Exception
 	 */
-	public String getProjNEmpList()  {
-		pm = new ProjectManager();
-		try {
-			projList = pm.getProjList();
-		} catch (SQLException e) {
-			logger.error("ERROR-" + e.getMessage());
-		} catch (ClassNotFoundException e) {
-			logger.error("ERROR-" + e.getMessage());
-		} catch (IOException e) {
-			logger.error("ERROR-" + e.getMessage());
-		}
-		try {
-			empList = pm.getEmpList();
-		} catch (SQLException e) {
-			logger.error("ERROR-" + e.getMessage());
-		} catch (ClassNotFoundException e) {
-			logger.error("ERROR-" + e.getMessage());
-		} catch (IOException e) {
-			logger.error("ERROR-" + e.getMessage());
+	public String getProjNEmpList() {
+
+		//
+
+		logger.info("Project" + project);
+		System.out.println("check valid to logged in or not..");
+		logger.info("check valid to logged in or not..");
+		System.out.println("TaskManager getFreqId method ..");
+		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
+				|| ((Integer) sessionMap.get("empID")) == 0) {
+			logger.info("ERROR: checking valid login..  failed..");
+			this.addActionError(getText("app.notloggedin.error"));
+			return "login";
+		} else {
+			pm = new ProjectManager();
+			try {
+				projList = pm.getProjList();
+			} catch (SQLException e) {
+				logger.error("ERROR-" + e.getMessage());
+			} catch (ClassNotFoundException e) {
+				logger.error("ERROR-" + e.getMessage());
+			} catch (IOException e) {
+				logger.error("ERROR-" + e.getMessage());
+			}
+			try {
+				empList = pm.getEmpList();
+			} catch (SQLException e) {
+				logger.error("ERROR-" + e.getMessage());
+			} catch (ClassNotFoundException e) {
+				logger.error("ERROR-" + e.getMessage());
+			} catch (IOException e) {
+				logger.error("ERROR-" + e.getMessage());
+			}
+
+			return "input";
 		}
 
-		return "input";
+		//
+
+		/*
+		 * pm = new ProjectManager(); try { projList = pm.getProjList(); } catch
+		 * (SQLException e) { logger.error("ERROR-" + e.getMessage()); } catch
+		 * (ClassNotFoundException e) { logger.error("ERROR-" + e.getMessage());
+		 * } catch (IOException e) { logger.error("ERROR-" + e.getMessage()); }
+		 * try { empList = pm.getEmpList(); } catch (SQLException e) {
+		 * logger.error("ERROR-" + e.getMessage()); } catch
+		 * (ClassNotFoundException e) { logger.error("ERROR-" + e.getMessage());
+		 * } catch (IOException e) { logger.error("ERROR-" + e.getMessage()); }
+		 * 
+		 * return "input";
+		 */
 	}
 
 	/*
@@ -81,7 +110,9 @@ public class ProjectAction extends ActionSupport implements SessionAware,
 	 * 
 	 * @see com.opensymphony.xwork2.ActionSupport#validate()
 	 */
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.opensymphony.xwork2.ActionSupport#validate()
 	 */
 	public void validate() {
@@ -129,70 +160,81 @@ public class ProjectAction extends ActionSupport implements SessionAware,
 				|| ((Integer) sessionMap.get("empID")) == 0) {
 			logger.info("ERROR: checking valid login..  failed..");
 			this.addActionError(getText("app.notloggedin.error"));
-			return ERROR;
-		}else{
+			return "login";
+		} else {
 			logger.info("checking valid login.. complete..");
 			pm = new ProjectManager();
 			res = pm.addProject(project);
 			sessionMap.put("result", res);
 			return "admin";
 		}
-		
-		//System.out.println("project action execute");
 
-			
+		// System.out.println("project action execute");
+
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see com.opensymphony.xwork2.ActionSupport#editProject()
 	 */
-	
-	public String editProject() throws Exception {
+
+	public String editProject() {
 		logger.debug("Edit Project execute method...");
-		String res = "";
-		HttpServletRequest request = (HttpServletRequest) ActionContext
-				.getContext().get(ServletActionContext.HTTP_REQUEST);
-		
-		
-			logger.info("checking valid login.. complete..");
-			pm = new ProjectManager();
-			project = pm.editProject(Integer.parseInt(request
-					.getParameter("id")));
-			sessionMap.put("result", res);
+		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
+				|| ((Integer) sessionMap.get("empID")) == 0) {
+			logger.info("ERROR: checking valid login..  failed..");
+			this.addActionError(getText("app.notloggedin.error"));
+			return "login";
+		} else {
+			String res = "";
+			try {
+				HttpServletRequest request = (HttpServletRequest) ActionContext
+						.getContext().get(ServletActionContext.HTTP_REQUEST);
+
+				logger.info("checking valid login.. complete..");
+				pm = new ProjectManager();
+				project = pm.editProject(Integer.parseInt(request
+						.getParameter("id")));
+				empList = pm.getEmpList();
+				sessionMap.put("result", res);
+
+			} catch (Exception e) {
+				logger.error("ERROR-" + e.getMessage());
+				this.addActionError(getText("app.error"));
+			}
 			return "input";
-		
 		}
-	
+	}
+
 	/**
 	 * deleteProject method
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
 	public String deleteProject() throws Exception {
 		logger.info("checking valid login.. start..");
-		
+
 		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
 				|| ((Integer) sessionMap.get("empID")) == 0) {
 			logger.info("ERROR: checking valid login..  failed..");
-			this.addActionError(getText("app.error"));
-			return ERROR;
+			this.addActionError(getText("app.notloggedin.error"));
+			return "login";
 		} else {
-		logger.debug("Called deleteProject method...");
-		String res = "";
-		HttpServletRequest request = (HttpServletRequest) ActionContext
-				.getContext().get(ServletActionContext.HTTP_REQUEST);
-		sessionMap.remove("result");
-		pm = new ProjectManager();
-		res=pm.deleteProj(Integer.parseInt(request.getParameter("id")));
-		sessionMap.put("result", res);
-		return "admin";
+			logger.debug("Called deleteProject method...");
+			String res = "";
+			HttpServletRequest request = (HttpServletRequest) ActionContext
+					.getContext().get(ServletActionContext.HTTP_REQUEST);
+			sessionMap.remove("result");
+			pm = new ProjectManager();
+			res = pm.deleteProj(Integer.parseInt(request.getParameter("id")));
+			sessionMap.put("result", res);
+			return "admin";
 		}
-		
+
 	}
-	
-	
+
 	@Override
 	public void prepare() throws Exception {
 		// TODO Auto-generated method stub
@@ -231,17 +273,17 @@ public class ProjectAction extends ActionSupport implements SessionAware,
 		String fmtDate = dateFormat.format(date);
 		String loginid = (String) sessionMap.get("loginID");
 		// save
-		if ((request.getParameter("id")==null)||(Integer.parseInt(request.getParameter("id")) == 0)) {
+		if ((request.getParameter("id") == null)
+				|| (Integer.parseInt(request.getParameter("id")) == 0)) {
 			project.setUpdatedDt(fmtDate);
 			project.setCreatedDt(fmtDate);
 			project.setCreatedBy(loginid);
 			project.setUpdatedBy(loginid);
-		}else{
-		//update
+		} else {
+			// update
 			project.setUpdatedDt(fmtDate);
 			project.setUpdatedBy(loginid);
 		}
-		
 
 		return project;
 	}
