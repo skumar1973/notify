@@ -25,7 +25,7 @@
 						<s:hidden name="createdBy" />
 						<s:hidden name="updatedDt" />
 						<s:hidden name="updatedBy" />
-						<s:submit value="Save/Update Task" />
+						<s:submit value="Save/Update Task" onClick="return confirm('Do you want to continue?');" />
 					</s:push>
 				</s:form></td>
 		</tr>
