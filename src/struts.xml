@@ -218,6 +218,7 @@
 
 		<action name="projects" class="com.c2pi.notify.action.ProjectAction">
 			<result name="error" type="tiles">projects.def</result>
+			<result name="login" type="tiles">login.def</result>
 			<result name="input" type="tiles">projects.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 
@@ -229,6 +230,7 @@
 				<param name="validation.excludeMethods">getProjNEmpList</param>
 			</interceptor-ref>
 			<result name="error" type="tiles">projects.def</result>
+			<result name="login" type="tiles">login.def</result>
 			<result name="input" type="tiles">projects.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 
@@ -240,6 +242,7 @@
 				<param name="validation.excludeMethods">editProject</param>
 			</interceptor-ref>
 			<result name="error" type="tiles">projects.def</result>
+			<result name="login" type="tiles">login.def</result>
 			<result name="input" type="tiles">projects.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 
@@ -251,6 +254,7 @@
 				<param name="validation.excludeMethods">deleteProject</param>
 			</interceptor-ref>
 			<result name="error" type="tiles">projects.def</result>
+			<result name="login" type="tiles">login.def</result>
 			<result name="input" type="tiles">projects.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
 		</action>
