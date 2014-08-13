@@ -9,25 +9,27 @@ import com.c2pi.notify.entity.Employee;
 
 /**
  * @author Shailendrak
- *
+ * 
  */
 public class EmployeeManager {
 
 	private Employee emp = null;
 	private EmployeeDAO edao = null;
 	ArrayList<Employee> empList = null;
+	private String queryResult = "";
 
 	/**
 	 * @param employee
 	 * @return
 	 * @throws SQLException
-	 * @throws ClassNotFoundException 
-	 * @throws IOException 
+	 * @throws ClassNotFoundException
+	 * @throws IOException
 	 */
-	public String addEmployee(Employee employee) throws SQLException, ClassNotFoundException, IOException {	
+	public String addEmployee(Employee employee) throws SQLException,
+			ClassNotFoundException, IOException {
 		String queryResult = "";
 		edao = new EmployeeDAO();
-		
+
 		queryResult = edao.addEmployee(employee);
 		return queryResult;
 	}
@@ -35,10 +37,11 @@ public class EmployeeManager {
 	/**
 	 * @return
 	 * @throws SQLException
-	 * @throws ClassNotFoundException 
-	 * @throws IOException 
+	 * @throws ClassNotFoundException
+	 * @throws IOException
 	 */
-	public ArrayList<Employee> getEmpList() throws SQLException, ClassNotFoundException, IOException {
+	public ArrayList<Employee> getEmpList() throws SQLException,
+			ClassNotFoundException, IOException {
 		ArrayList<Employee> empList = null;
 		edao = new EmployeeDAO();
 		empList = edao.getEmpList();
@@ -53,5 +56,15 @@ public class EmployeeManager {
 		System.out.println("EmpList" + empList);
 		return emp;
 
+	}
+
+	public String deleteTF(int tfID) throws SQLException,
+			ClassNotFoundException, IOException {
+		System.out.println("TaskFreqManager deleteTF method..");
+		edao = new EmployeeDAO();
+		queryResult = edao.deleteTF(tfID);
+		System.out.println("tfdaores" + queryResult);
+
+		return queryResult;
 	}
 }

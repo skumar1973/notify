@@ -139,15 +139,17 @@
 		</action>
 
 <!-- Employee form -->
-		<action name="employeeform" class="com.c2pi.notify.action.EmployeeAction" method="getEmployeeList">
+			<action name="employeeform" class="com.c2pi.notify.action.EmployeeAction" method="getEmployeeList">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getEmployeeList</param>
 			</interceptor-ref>
+			<result name="login" type="tiles">login.def</result>	
 			<result name="error" type="tiles">employee.def</result>
 			<result name="input" type="tiles">employee.def</result>
 		</action>
 		
 		<action name="employee" class="com.c2pi.notify.action.EmployeeAction" method="execute">
+			<result name="login" type="tiles">login.def</result>	
 			<result name="error" type="tiles">employee.def</result>
 			<result name="input" type="tiles">employee.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
@@ -157,6 +159,7 @@
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">edit</param>
 			</interceptor-ref>
+			<result name="login" type="tiles">login.def</result>	
 			<result name="error" type="tiles">employee.def</result>
 			<result name="input" type="tiles">employee.def</result>			
 		</action>
@@ -165,6 +168,7 @@
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">delete</param>
 			</interceptor-ref>
+			<result name="login" type="tiles">login.def</result>	
 			<result name="error" type="tiles">employee.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>			
 		</action>

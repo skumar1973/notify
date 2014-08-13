@@ -30,7 +30,7 @@ public class EmployeeAction extends ActionSupport implements
 
 	private static final long serialVersionUID = 1L;
 	private ArrayList<Employee> empList = new ArrayList<Employee>();
-	private EmployeeManager empMgr = null;
+	private EmployeeManager empMgr = new EmployeeManager();
 	private Employee employee = new Employee();
 
 	Logger logger = Logger.getLogger(EmployeeAction.class.getName());
@@ -52,7 +52,7 @@ public class EmployeeAction extends ActionSupport implements
 		String result = "";
 		logger.info("employee action execute method..");
 
-		empMgr = new EmployeeManager();
+		//empMgr = new EmployeeManager();
 
 		if (sessionMap != null)
 			sessionMap.remove("result");
@@ -61,10 +61,10 @@ public class EmployeeAction extends ActionSupport implements
 		logger.info("check valid login start..");
 		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
 				|| ((Integer) sessionMap.get("empID")) == 0) {
-			logger.info("ERROR: check valid login..  failed..");
-			this.addActionError(getText("app.error"));
-			return ERROR;
-		}
+			logger.info("ERROR: checking valid login..  failed..");
+			this.addActionError(getText("app.notloggedin.error"));
+			return "login";
+		} else {
 
 		logger.info("calling method addEmployee..");
 		try {
@@ -89,6 +89,7 @@ public class EmployeeAction extends ActionSupport implements
 		sessionMap.put("result", result);
 
 		return "admin";
+		}
 	}
 
 	/*
@@ -153,7 +154,14 @@ public class EmployeeAction extends ActionSupport implements
 	 * @throws SQLException
 	 */
 	public String getEmployeeList() {
-		empMgr = new EmployeeManager();
+		
+		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
+				|| ((Integer) sessionMap.get("empID")) == 0) {
+			logger.info("ERROR: checking valid login..  failed..");
+			this.addActionError(getText("app.notloggedin.error"));
+			return "login";
+		} else {
+		//empMgr = new EmployeeManager();
 		try {
 			empList = empMgr.getEmpList();
 		} catch (ClassNotFoundException e) {
@@ -170,10 +178,11 @@ public class EmployeeAction extends ActionSupport implements
 			this.addFieldError("firstName", getText("app.error"));
 		}
 		return "input";
+		}
 	}
 
 	public String edit() {
-		empMgr = new EmployeeManager();
+		//empMgr = new EmployeeManager();
 
 		HttpServletRequest request = (HttpServletRequest) ActionContext
 				.getContext().get(ServletActionContext.HTTP_REQUEST);
@@ -182,7 +191,7 @@ public class EmployeeAction extends ActionSupport implements
 				|| ((Integer) sessionMap.get("empID")) == 0) {
 			logger.info("ERROR: checking valid login..  failed..");
 			this.addActionError(getText("app.notloggedin.error"));
-			return ERROR;
+			return "login";
 		} else {
 			logger.info("checking valid login.. complete..");
 
@@ -211,6 +220,48 @@ public class EmployeeAction extends ActionSupport implements
 			}
 
 			return "input";
+		}
+	}
+	public String delete() {
+		String res = null;
+
+		logger.info("checking valid login.. start..");
+		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
+				|| ((Integer) sessionMap.get("empID")) == 0) {
+			logger.info("ERROR: checking valid login..  failed..");
+			this.addActionError(getText("app.notloggedin.error"));
+			return ERROR;
+		} else {
+
+			HttpServletRequest request = (HttpServletRequest) ActionContext
+					.getContext().get(ServletActionContext.HTTP_REQUEST);
+			sessionMap.remove("result");
+			try {
+				res = empMgr.deleteTF(Integer.parseInt(request
+						.getParameter("id")));
+			} catch (NumberFormatException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (ClassNotFoundException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (SQLException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText(e.getMessage()));
+				return ERROR;
+			} catch (IOException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText(e.getMessage()));
+				return ERROR;
+			}
+			sessionMap.put("result", res);
+			return "admin";
 		}
 	}
 
