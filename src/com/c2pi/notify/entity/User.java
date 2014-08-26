@@ -5,6 +5,7 @@ public class User {
 	private String loginID;
 	private String password;
 	private int empID;
+	private String empName;
 	private String createdDt;
 	private String createdBy;
 	private String updatedDt;
@@ -56,5 +57,11 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
 	}
 }

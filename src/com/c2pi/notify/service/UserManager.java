@@ -6,8 +6,10 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
+import com.c2pi.notify.dao.ProjectDAO;
 import com.c2pi.notify.dao.UserDAO;
 import com.c2pi.notify.entity.Employee;
+import com.c2pi.notify.entity.Project;
 import com.c2pi.notify.entity.User;
 
 /**
@@ -18,7 +20,7 @@ public class UserManager {
 
 	UserDAO udao = null;
 	Logger logger = Logger.getLogger(UserManager.class.getName());
-
+	User edituser=null;
 	/**
 	 * @param user
 	 * @return
@@ -63,5 +65,27 @@ public class UserManager {
 		empList = udao.getEmpList();
 		return empList;
 
+	}
+
+	public User editUser(int userId) throws SQLException, ClassNotFoundException, IOException{
+		udao = new UserDAO();
+		edituser = udao.getedituserList(userId);
+		
+		return edituser;
+	}
+	
+	/**
+	 * @param projectId
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+		
+	public String deleteUser(int userId) throws SQLException, IOException, ClassNotFoundException{
+		String deleteUs=null;
+		udao = new UserDAO();
+		deleteUs = udao.userDelete(userId);
+		return deleteUs;
 	}
 }

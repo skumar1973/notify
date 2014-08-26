@@ -265,24 +265,49 @@
 		
 		<!-- Projects end -->
 
+		<!--User Mapping START  --> 
 		<action name="user" class="com.c2pi.notify.action.UserAction">
-			<result name="error">jsp/userform.jsp</result>
+			<result name="error" type="tiles">user.def</result>
 			<result name="input" type="tiles">user.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
-			<result name="manager" type="tiles">manager.welcome.def</result>
-			<result name="team" type="tiles">team.welcome.def</result>
+			<result name="login" type="tiles">login.def</result>
 		</action>
 		<action name="userform" class="com.c2pi.notify.action.UserAction"
 			method="getUserNEmpList">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.excludeMethods">getUserNEmpList</param>
 			</interceptor-ref>
-			<result name="error">jsp/userform.jsp</result>
+			
+			<result name="error" type="tiles">user.def</result>
+			<result name="login" type="tiles">login.def</result>
 			<result name="input" type="tiles">user.def</result>
 			<result name="admin" type="tiles">admin.welcome.def</result>
-			<result name="manager" type="tiles">manager.welcome.def</result>
-			<result name="team" type="tiles">team.welcome.def</result>
 		</action>
+
+		<action name="editUser" class="com.c2pi.notify.action.UserAction"
+			method="userEdit">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.excludeMethods">userEdit</param>
+			</interceptor-ref>
+			<result name="login" type="tiles">login.def</result>
+			<result name="error" type="tiles">user.def</result>
+			<result name="input" type="tiles">user.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+		</action>
+		
+		<action name="deleteUser" class="com.c2pi.notify.action.UserAction"
+			method="deleteUser">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.excludeMethods">deleteUser</param>
+			</interceptor-ref>
+			<result name="login" type="tiles">login.def</result>
+			<result name="error" type="tiles">user.def</result>
+			<result name="input" type="tiles">user.def</result>
+			<result name="admin" type="tiles">admin.welcome.def</result>
+			
+		</action>
+		
+		<!--User Mapping END  -->  
 
 
 		<action name="employeerole" class="com.c2pi.notify.action.EmployeeRoleAction">
