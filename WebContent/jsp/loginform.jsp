@@ -5,18 +5,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="<s:url value ="/css/Theme.css"/>" rel="stylesheet" type="text/css" />
 
 </head>
 <body>
-
-	<table width="100%" align="center" cellpadding="10">
-		<tr>
-			<td><s:actionerror /> <s:form action="login" method="post">
-					<s:textfield name="loginID" key="app.login.loginid" />
-					<s:password name="password" key="app.login.password" />
-					<s:submit value="Login" />
-				</s:form></td>
-		</tr>
-	</table>
+	<div class="myLogin">
+		<table>
+			<tr>
+				<td><s:actionerror /> <s:form action="login" method="post">
+					<s:textfield name="loginID" placeholder="Enter User Name"
+							cssclass="textbox login" key="app.login.loginid" />
+						<s:password name="password" placeholder="Enter Password"
+							cssclass="textbox" key="app.login.password" />
+						<s:submit value="Login" id="orange" cssClass="myButton orange" />
+					</s:form></td>
+			</tr>
+		</table>
+	</div>
 </body>
 </html>

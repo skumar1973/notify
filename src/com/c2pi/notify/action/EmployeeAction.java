@@ -237,7 +237,7 @@ public class EmployeeAction extends ActionSupport implements
 					.getContext().get(ServletActionContext.HTTP_REQUEST);
 			sessionMap.remove("result");
 			try {
-				res = empMgr.deleteTF(Integer.parseInt(request
+				res = empMgr.deleteEmp(Integer.parseInt(request
 						.getParameter("id")));
 			} catch (NumberFormatException e) {
 				logger.error("ERROR-" + e.getMessage());

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<link href="<s:url value ="/css/Theme.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
@@ -31,32 +31,31 @@
 		</tr>
 	</table>
 	<s:if test="roleMenuList.size()>0">
+	<div class="CSSTableGenerator">
 		<table width="100%" align="center" style="border: 1px solid black;">
 			<tr>
-				<th>Id</th>
-				<th>RoleID</th>
-				<th>MenuID</th>
-
-				<th>Created Date</th>
-				<th>Created By</th>
-				<th>Updated Date</th>
-				<th>Updated By</th>
-				<th>Edit</th>
-				<th>Delete</th>
+				<td>Id</td>
+				<td>Role</td>
+				<td>Menu</td>
+				<td>Created Date</td>
+				<td>Created By</td>
+				<td>Updated Date</td>
+				<td>Updated By</td>
+				<td>Edit</td>
+				<td>Delete</td>
 			</tr>
 			<s:iterator id="ls" value="roleMenuList">
 				<tr>
 					<td><s:property value="id" /></td>
-					<td><s:property value="roleID" /></td>
-					<td><s:property value="menuID" /></td>
-
+					<td><s:property value="roleName" /></td>
+					<td><s:property value="menuName" /></td>
 					<td><s:property value="createdDt" /></td>
 					<td><s:property value="createdBy" /></td>
 					<td><s:property value="updatedDt" /></td>
 					<td><s:property value="updatedBy" /></td>
 					<td><s:url id="editURL" action="editrolemenu">
 							<s:param name="id" value="%{id}"></s:param>
-						</s:url> <s:a href="%{editURL}" onclick=" return false">
+						</s:url> <s:a href="%{editURL}">
 							<img height="20" width="20"
 								src="<s:url value="/img/edit_image.jpg"/>" />
 						</s:a></td>
@@ -70,6 +69,7 @@
 				</tr>
 			</s:iterator>
 		</table>
+		</div>
 	</s:if>
 
 

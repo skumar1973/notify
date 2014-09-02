@@ -13,29 +13,52 @@ import com.c2pi.notify.entity.Role;
  */
 public class RoleManager {
 
-	RoleDAO rdao = null;
+	private Role role = new Role();
+	private ArrayList<Role> roleList = null;
+	RoleDAO rdao = new RoleDAO();
+	private String roledaores = "";
 
 	/**
 	 * @param role
 	 * @return
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
-	 * @throws IOException 
+	 * @throws IOException
 	 */
-	public String AddRole(Role role) throws SQLException,
+	public String addRole(Role role) throws SQLException,
 			ClassNotFoundException, IOException {
-		String roledaores = "";
+		// String roledaores = "";
 		rdao = new RoleDAO();
 		roledaores = rdao.addRole(role);
 
 		return roledaores;
 	}
 
+	public Role getRoleById(int roleID) throws SQLException,
+			ClassNotFoundException, IOException {
+		System.out.println("Role get list method..");
+		rdao = new RoleDAO();
+		role = rdao.getRoleById(roleID);
+		System.out.println("RoleList" + roleList);
+		return role;
+
+	}
+
+	public String deleteRole(int roleID) throws SQLException,
+			ClassNotFoundException, IOException {
+		System.out.println("RoleMenuManager deleteRM method..");
+		roledaores = rdao.deleteRole(roleID);
+		System.out.println("roledaores" + roledaores);
+
+		return roledaores;
+
+	}
+
 	/**
 	 * @return
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public ArrayList<Role> getRoleList() throws SQLException,
 			ClassNotFoundException, IOException {

@@ -24,7 +24,7 @@ import com.opensymphony.xwork2.Preparable;
 
 /**
  * @author Shailendrak
- * 
+ *
  */
 public class UserAction extends ActionSupport implements SessionAware,
 		Preparable, ModelDriven<User> {
@@ -39,7 +39,7 @@ public class UserAction extends ActionSupport implements SessionAware,
 
 	Map<String, Object> sessionMap;
 	Logger logger = Logger.getLogger(UserAction.class.getName());
-
+	
 	@Override
 	public void setSession(Map<String, Object> sessionMap) {
 		this.sessionMap = sessionMap;
@@ -50,7 +50,7 @@ public class UserAction extends ActionSupport implements SessionAware,
 	 * 
 	 * @see com.opensymphony.xwork2.ActionSupport#execute()
 	 */
-	public String execute() {
+	public String execute()  {
 
 		logger.debug("check valid login start..");
 		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
@@ -59,35 +59,35 @@ public class UserAction extends ActionSupport implements SessionAware,
 			this.addActionError(getText("app.invalid"));
 			return "login";
 		} else {
-			String res = "";
-			if (sessionMap != null)
-				sessionMap.remove("result");
-
-			UserManager um = new UserManager();
-			logger.info("UserAction execute method..");
-			try {
-				res = um.AddUser(user);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		String res = "";
+		if (sessionMap != null)
+			sessionMap.remove("result");
+		
+		UserManager um = new UserManager();
+		logger.info("UserAction execute method..");
+		try {
+			res = um.AddUser(user);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 				addActionError(e.getMessage());
 				return "input";
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 				addActionError(e.getMessage());
 				return "input";
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 				addActionError(e.getMessage());
 				// addFieldError("loginID", getText("app.user.loginID.blank"))
 				return "input";
-			}
-			sessionMap.put("result", res);
-
-			return "admin";
 		}
+		sessionMap.put("result", res);
+		
+		return "admin";
+	}
 	}
 
 	public void validate() {
@@ -99,7 +99,7 @@ public class UserAction extends ActionSupport implements SessionAware,
 			try {
 				empList = um.getEmpList();
 			} catch (SQLException e) {
-				logger.error("Error - " + e.getErrorCode());
+				logger.error("Error - "+e.getErrorCode());
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -112,7 +112,7 @@ public class UserAction extends ActionSupport implements SessionAware,
 			try {
 				userList = um.getUserList();
 			} catch (SQLException e) {
-				logger.error("Error - " + e.getErrorCode());
+				logger.error("Error - "+e.getErrorCode());
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -125,7 +125,7 @@ public class UserAction extends ActionSupport implements SessionAware,
 		}
 	}
 
-	public String getUserNEmpList() {
+	public String getUserNEmpList()  {
 		System.out.println("check valid login start..");
 
 		logger.debug("check valid login start..");
@@ -135,35 +135,35 @@ public class UserAction extends ActionSupport implements SessionAware,
 			this.addActionError(getText("app.invalid"));
 			return "login";
 		} else {
-			UserManager um = new UserManager();
-			logger.info("TaskManager getEmpList method ..");
-			try {
-				empList = um.getEmpList();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			logger.info("UserAction getuserlist method ...");
-			try {
-				userList = um.getUserList();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		UserManager um = new UserManager();
+		logger.info("TaskManager getEmpList method ..");
+		try {
+			empList = um.getEmpList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		logger.info("UserAction getuserlist method ...");
+		try {
+			userList = um.getUserList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-			return "input";
+		return "input";
 		}
 	}
 
@@ -260,3 +260,4 @@ public class UserAction extends ActionSupport implements SessionAware,
 	}
 
 }
+

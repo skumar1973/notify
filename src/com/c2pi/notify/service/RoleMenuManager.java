@@ -3,6 +3,7 @@ package com.c2pi.notify.service;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import com.c2pi.notify.dao.MenuDAO;
 import com.c2pi.notify.dao.RoleDAO;
 import com.c2pi.notify.dao.RoleMenuDAO;
@@ -18,7 +19,7 @@ public class RoleMenuManager {
 	private ArrayList<Menu> menuList = null;
 	private RoleMenuDAO rmDAO = new RoleMenuDAO();
 	private RoleMenu rm = null;
-	private String rmdaores="";
+	private String rmdaores = "";
 
 	public void getList() throws SQLException, ClassNotFoundException,
 			IOException {
@@ -42,7 +43,8 @@ public class RoleMenuManager {
 	}
 
 	public String savenupdRoleMenu(RoleMenu rolemenu) throws SQLException,
-			ClassNotFoundException, IOException, MySQLIntegrityConstraintViolationException {
+			ClassNotFoundException, IOException,
+			MySQLIntegrityConstraintViolationException {
 		String RoleMenuResult = "";
 		RoleMenuDAO rmDAO = new RoleMenuDAO();
 		RoleMenuResult = rmDAO.saveNUpdRoleMenu(rolemenu);
@@ -57,6 +59,20 @@ public class RoleMenuManager {
 
 		return rmdaores;
 
+	}
+
+	public ArrayList<Role> getRoleId() throws SQLException,
+			ClassNotFoundException, IOException {
+		rmDAO = new RoleMenuDAO();
+		roleList = rmDAO.getRoleId();
+		return roleList;
+	}
+
+	public ArrayList<Menu> getMenuId() throws SQLException,
+			ClassNotFoundException, IOException {
+		rmDAO = new RoleMenuDAO();
+		menuList = rmDAO.getMenuId();
+		return menuList;
 	}
 
 	public ArrayList<RoleMenu> getRoleMenuList() {

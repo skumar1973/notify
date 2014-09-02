@@ -15,16 +15,18 @@
 			<s:form action="user" method="post">
 					<s:push value="user">
 					<s:hidden name="id"/>
-					<s:textfield name="loginID" key="app.user.login_id" />
-					<s:textfield name="password" type="password" key="app.user.password" />
 					<s:select name="empID" list="empList" listKey="id"
 						listValue="firstName" headerKey="0" headerValue="Select"
 						key="app.user.emp_id" />
-					<s:submit value="Add/Update Users" onClick="return confirm('Do you want to continue?')" />
+					<s:textfield name="loginID" key="app.user.login_id" />
+					<s:textfield name="password" type="password" key="app.user.password" />
+					<s:submit value="Save/Update User" onClick="return confirm('Do you want to continue?')" />
+					
 					</s:push>
 	<s:if test="userList.size()>0">
 					<table width="100%" align="center" style="border: 1px solid black;">
 						<tr>
+							
 							<th>Id</th>
 							<th>login_id</th>
 							<th>emp_name</th>

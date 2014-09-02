@@ -5,11 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<link href="<s:url value ="/css/Theme.css"/>" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
 <!-- 	<table width="100%" height="100%" bgcolor="#A1EBF0"> -->
+
 <table width="100%" height="100%">
 		<tr>
 		    <td> <img src="<s:url value="/img/c2p_logo.jpg"/>" />  </td>

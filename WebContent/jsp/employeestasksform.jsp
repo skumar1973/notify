@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<link href="<s:url value ="/css/Theme.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 
@@ -23,7 +23,7 @@
 						key="app.employeestasks.task_id" />
 
 					<s:submit value="Add Employee Tasks " />
-
+<div class="CSSTableGenerator">
 					<table width="100%" align="center" cellpadding="0"
 						style="border: 1px solid black;">
 						<tr>
@@ -48,6 +48,7 @@
 							</tr>
 						</s:iterator>
 					</table>
+					</div>
 				</s:form></td>
 		</tr>
 	</table>

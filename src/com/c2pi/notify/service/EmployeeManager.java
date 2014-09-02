@@ -58,11 +58,11 @@ public class EmployeeManager {
 
 	}
 
-	public String deleteTF(int tfID) throws SQLException,
+	public String deleteEmp(int empID) throws SQLException,
 			ClassNotFoundException, IOException {
 		System.out.println("TaskFreqManager deleteTF method..");
 		edao = new EmployeeDAO();
-		queryResult = edao.deleteTF(tfID);
+		queryResult = edao.deleteEmp(empID);
 		System.out.println("tfdaores" + queryResult);
 
 		return queryResult;

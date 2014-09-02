@@ -21,14 +21,21 @@ public class RoleDAO {
 	ResultSet rs = null;
 	String query = "";
 	int res = 0;
-	DBConn con = null;
+	private DBConn con = new DBConn();
+	private ArrayList<Role> roleList = null;
 
 	public String addRole(Role role) throws SQLException,
 			ClassNotFoundException, IOException {
-		query = "Insert Into `c2pidb`.`Roles` (`name`,`desc`,`status`,`created_by`,`created_dt`,`updated_by`,`updated_dt`) values (?,?,?,?,?,?,?)";
-		con = new DBConn();
-
+		// con = new DBConn();
 		conn = con.getConn();
+		if (role.getId() == 0) {
+			query = "insert into roles (name,`desc`,status,created_by,created_dt,"
+					+ "updated_by,updated_dt) values (?,?,?,?,?,?,?)";
+		} else {
+			query = "update roles set name =?,`desc`=?,status=?,created_by=?,"
+					+ "created_dt=?,updated_by=?,updated_dt=? where id=?";
+
+		}
 		pstmt = conn.prepareStatement(query);
 		pstmt.setString(1, role.getName());
 		pstmt.setString(2, role.getDesc());
@@ -39,6 +46,12 @@ public class RoleDAO {
 		pstmt.setString(7, role.getUpdatedDt());
 
 		System.out.println("query:" + query);
+		if (role.getId() != 0) {
+
+			pstmt.setInt(8, role.getId());
+
+		}
+
 		res = pstmt.executeUpdate();
 		System.out.println("res=" + res);
 
@@ -47,19 +60,13 @@ public class RoleDAO {
 		if (conn != null)
 			conn.close();
 
-		return (res + "- role added.");
+		return (res + "- role added/updated.");
 	}
 
-	/**
-	 * @return
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
-	 * @throws IOException 
-	 */
 	public ArrayList<Role> getRoleList() throws SQLException,
 			ClassNotFoundException, IOException {
 
-		ArrayList<Role> roleList = new ArrayList<Role>();
+		roleList = new ArrayList<Role>();
 		Role role = null;
 		con = new DBConn();
 		conn = con.getConn();
@@ -88,4 +95,54 @@ public class RoleDAO {
 
 		return roleList;
 	}
+
+	public Role getRoleById(int roleID) throws SQLException,
+			ClassNotFoundException, IOException {
+		Role role = new Role();
+		query = "SELECT id, name, `desc`, status, created_dt, created_by, updated_dt, updated_by FROM `c2pidb`.`roles` where id =?";
+		conn = con.getConn();
+		pstmt = conn.prepareStatement(query);
+		pstmt.setInt(1, roleID);
+		System.out.println("pstmt:" + pstmt);
+		rs = pstmt.executeQuery();
+		while (rs.next()) {
+			role.setId(rs.getInt("id"));
+			role.setName(rs.getString("name"));
+			role.setDesc(rs.getString("desc"));
+			role.setStatus(rs.getString("status"));
+			role.setCreatedDt(rs.getString("created_dt"));
+			role.setCreatedBy(rs.getString("created_by"));
+			role.setUpdatedDt(rs.getString("updated_dt"));
+			role.setUpdatedBy(rs.getString("updated_by"));
+		}
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+		return role;
+
+	}
+
+	public String deleteRole(int roleID) throws SQLException,
+			ClassNotFoundException, IOException {
+
+		query = "DELETE from `c2pidb`.`roles` where id=?";
+		con = new DBConn();
+		conn = con.getConn();
+
+		pstmt = conn.prepareStatement(query);
+		pstmt.setInt(1, roleID);
+		System.out.println("pstmt" + pstmt);
+
+		int result = pstmt.executeUpdate();
+		System.out.println("queryResult:" + result);
+
+		if (pstmt != null)
+			pstmt.close();
+		if (conn != null)
+			conn.close();
+
+		return result + "-rows deleted.";
+	}
+
 }

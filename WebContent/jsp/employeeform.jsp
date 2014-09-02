@@ -5,14 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="<s:url value ="/css/Theme.css"/>" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<div class="gradientBoxesWithOuterShadows">
 	<table width="100%" align="center" cellpadding="0">
 		<tr>
 			<td><s:actionerror /> <s:form action="employee" method="post">
 					<s:push value="employee">
 						<s:hidden name="id"></s:hidden>
-						<s:textfield name="firstName" key="app.employee.firstName" />
+						<s:textfield name="firstName"  key="app.employee.firstName" />
 						<s:textfield name="lastName" key="app.employee.lastName" />
 						<s:textfield name="email" key="app.employee.email" />
 						<s:textfield name="designation" key="app.employee.designation" />
@@ -28,21 +30,22 @@
 				</s:form></td>
 		</tr>
 	</table>
-
+</div>
 	<s:if test="empList.size()>0">
-		<table width="100%" align="center" style="border: 1px solid black;">
-			<tr>
-				<th>Id</th>
-				<th>Name</th>
-				<th>Email</th>
-				<th>Designation</th>
-				<th>Status</th>
-				<th>Created Date</th>
-				<th>Created By</th>
-				<th>Updated Date</th>
-				<th>Updated By</th>
-				<th>Edit</th>
-				<th>Delete</th>
+	<div class="CSSTableGenerator">
+		<table>
+			<tr >
+				<td>Id</td>
+				<td>Name</td>
+				<td>Email</td>
+				<td>Designation</td>
+				<td>Status</td>
+				<td>Created Date</td>
+				<td>Created By</td>
+				<td>Updated Date</td>
+				<td>Updated By</td>
+				<td>Edit</td>
+				<td>Delete</td>
 			</tr>
 			<s:iterator id="ls" value="empList">
 				<tr>
@@ -66,6 +69,7 @@
 				
 			</s:iterator>
 		</table>
+		</div>
 	</s:if>
 </body>
 </html>

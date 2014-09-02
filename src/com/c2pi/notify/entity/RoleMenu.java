@@ -3,7 +3,9 @@ package com.c2pi.notify.entity;
 public class RoleMenu {
 	private int id;
 	private int roleID;
+	private String roleName;
 	private int menuID;
+	private String menuName;
 	private String createdDt;
 	private String createdBy;
 	private String updatedDt;
@@ -56,6 +58,18 @@ public class RoleMenu {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getMenuName() {
+		return menuName;
+	}
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 
 }

@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import com.c2pi.notify.common.DBConn;
 import com.c2pi.notify.entity.Employee;
-import com.c2pi.notify.entity.Project;
 import com.c2pi.notify.entity.User;
 
 /**
@@ -36,7 +35,7 @@ public class UserDAO {
 	 * @return
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws IOException 
 	 */
 	public String addUser(User user) throws SQLException,
 			ClassNotFoundException, IOException {
@@ -46,14 +45,14 @@ public class UserDAO {
 		if (user.getId() == 0) {
 			query = "Insert Into `c2pidb`.`users` (`login_id`,`password`,`emp_id`,`created_by`,`created_dt`, `updated_by`, `updated_dt`) values(?,?,?,?,?,?,?)";
 			
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, user.getLoginID());
-			pstmt.setString(2, user.getPassword());
-			pstmt.setInt(3, user.getEmpID());
-			pstmt.setString(4, user.getCreatedBy());
-			pstmt.setString(5, user.getCreatedDt());
-			pstmt.setString(6, user.getUpdatedBy());
-			pstmt.setString(7, user.getUpdatedDt());
+		pstmt = conn.prepareStatement(query);
+		pstmt.setString(1, user.getLoginID());
+		pstmt.setString(2, user.getPassword());
+		pstmt.setInt(3, user.getEmpID());
+		pstmt.setString(4, user.getCreatedBy());
+		pstmt.setString(5, user.getCreatedDt());
+		pstmt.setString(6, user.getUpdatedBy());
+		pstmt.setString(7, user.getUpdatedDt());
 			
 		
 		}else {
@@ -74,6 +73,7 @@ public class UserDAO {
 			pstmt.close();
 		if (conn != null)
 			conn.close();
+
 		return (res + "- User added.");
 	}
 
@@ -81,7 +81,7 @@ public class UserDAO {
 	 * @return
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws IOException 
 	 */
 	public ArrayList<Employee> getEmpList() throws SQLException,
 			ClassNotFoundException, IOException {
@@ -117,7 +117,7 @@ public class UserDAO {
 	 * @return
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * @throws IOException 
 	 */
 	public ArrayList<User> getUserList() throws SQLException,
 			ClassNotFoundException, IOException {

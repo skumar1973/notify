@@ -7,28 +7,29 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.c2pi.notify.entity.Role;
 import com.c2pi.notify.service.RoleManager;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-import com.opensymphony.xwork2.Preparable;
 
-/**
- * @author Shailendrak
- * 
- */
-public class RoleAction extends ActionSupport implements SessionAware,
-		ModelDriven<Role>, Preparable {
+public class RoleAction extends ActionSupport implements ModelDriven<Role>,
+		SessionAware {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	private ArrayList<Role> roleList = new ArrayList<Role>();
+	private RoleManager rmMgr = new RoleManager();
+	private Role role = new Role();
 
-	ArrayList<Role> roleList = new ArrayList<Role>();
-	Role role = new Role();
+	Logger logger = Logger.getLogger(RoleAction.class.getName());
+
 	Map<String, Object> sessionMap;
 
 	@Override
@@ -39,89 +40,49 @@ public class RoleAction extends ActionSupport implements SessionAware,
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.opensymphony.xwork2.ActionSupport#validate()
-	 */
-	public void validate() {
-		System.out.println("role action validate");
-
-		if ((role.getName() == null) || (role.getName().length() == 0)) {
-			this.addFieldError("name", getText("app.role.name.blank"));
-			RoleManager rm = new RoleManager();
-			try {
-				roleList = rm.getRoleList();
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see com.opensymphony.xwork2.ActionSupport#execute()
 	 */
 	public String execute() {
 
-		System.out.println("role action execute");
-		// System.out.println("name " + name);
-		String res = "";
-		sessionMap.remove("result");
-		RoleManager rm = new RoleManager();
-		System.out.println("role manager addrole method..");
-		try {
-			res = rm.AddRole(role);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String result = "";
+		logger.info("role action execute method..");
+
+		if (sessionMap != null)
+			sessionMap.remove("result");
+		logger.info("Role" + role);
+		System.out.println("check valid login start..");
+		logger.info("check valid login start..");
+		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
+				|| ((Integer) sessionMap.get("empID")) == 0) {
+			logger.info("ERROR: checking valid login..  failed..");
+			this.addActionError(getText("app.notloggedin.error"));
+			return "login";
+		} else {
+
+			logger.info("calling method addRole..");
+			try {
+				result = rmMgr.addRole(role);
+			} catch (SQLException e) {
+				logger.error("ERROR:" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (ClassNotFoundException e) {
+				logger.error("ERROR:" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (IOException e) {
+				logger.error("ERROR:" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			}
+
+			sessionMap.put("result", result);
+
+			return "admin";
 		}
-		sessionMap.put("result", res);
-		return "admin";
-	}
-
-	/**
-	 * @return
-	 * @throws SQLException
-	 */
-	public String getRoleList() throws SQLException {
-
-		RoleManager rm = new RoleManager();
-		try {
-			roleList = rm.getRoleList();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return "input";
-	}
-
-	public void prepare() {
-		System.out.println("role action prepare method..");
-	}
-
-	public ArrayList<Role> getRolelist() {
-		return roleList;
-	}
-
-	public void setRolelist(ArrayList<Role> roleList) {
-		this.roleList = roleList;
 	}
 
 	/*
@@ -131,16 +92,184 @@ public class RoleAction extends ActionSupport implements SessionAware,
 	 */
 	@Override
 	public Role getModel() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		String loginid = (String) sessionMap.get("loginID");
-		String fmtDate = dateFormat.format(date);
-		role.setCreatedBy(loginid);
-		role.setCreatedDt(fmtDate);
-		role.setUpdatedBy(loginid);
-		role.setUpdatedDt(fmtDate);
 
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().get(ServletActionContext.HTTP_REQUEST);
+
+		Date date = new Date();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String fmtDate = dateFormat.format(date);
+		String loginid = (String) sessionMap.get("loginID");
+		// save
+		if ((request.getParameter("id") == null)
+				|| (Integer.parseInt(request.getParameter("id")) == 0)) {
+			role.setCreatedDt(fmtDate);
+			role.setCreatedBy(loginid);
+			role.setUpdatedDt(fmtDate);
+			role.setUpdatedBy(loginid);
+		} else {
+			// update
+			role.setUpdatedDt(fmtDate);
+			role.setUpdatedBy(loginid);
+		}
 		return role;
+	}
+
+	public void validate() {
+		logger.debug("role action validate method..");
+
+		if ((role.getName() == null) || (role.getName().length() == 0)) {
+			this.addFieldError("Name", getText("app.role.Name.blank"));
+			rmMgr = new RoleManager();
+			try {
+				roleList = rmMgr.getRoleList();
+			} catch (SQLException e) {
+				logger.error("ERROR:" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+
+			} catch (ClassNotFoundException e) {
+				logger.error("ERROR:" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+			} catch (IOException e) {
+				logger.error("ERROR:" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+			}
+		}
+	}
+
+	/**
+	 * @return input
+	 * @throws SQLException
+	 */
+	public String getAllRoleList() {
+
+		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
+				|| ((Integer) sessionMap.get("empID")) == 0) {
+			logger.info("ERROR: checking valid login..  failed..");
+			this.addActionError(getText("app.notloggedin.error"));
+			return "login";
+		} else {
+
+			try {
+				roleList = rmMgr.getRoleList();
+			} catch (ClassNotFoundException e) {
+				logger.error(e.getMessage());
+				e.printStackTrace();
+				this.addFieldError("firstName", getText("app.error"));
+			} catch (SQLException e) {
+				logger.error(e.getMessage());
+				e.printStackTrace();
+				this.addFieldError("firstName", getText("app.error"));
+			} catch (IOException e) {
+				logger.error(e.getMessage());
+				e.printStackTrace();
+				this.addFieldError("firstName", getText("app.error"));
+			}
+			return "input";
+		}
+	}
+
+	public String edit() {
+		HttpServletRequest request = (HttpServletRequest) ActionContext
+				.getContext().get(ServletActionContext.HTTP_REQUEST);
+
+		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
+				|| ((Integer) sessionMap.get("empID")) == 0) {
+			logger.info("ERROR: checking valid login..  failed..");
+			this.addActionError(getText("app.notloggedin.error"));
+			return "login";
+		} else {
+			logger.info("checking valid login.. complete..");
+
+			try {
+				role = rmMgr.getRoleById(Integer.parseInt(request
+						.getParameter("id")));
+			} catch (NumberFormatException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (ClassNotFoundException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (SQLException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (IOException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			}
+
+			return "input";
+		}
+	}
+
+	public String delete() {
+		String res = null;
+
+		logger.info("checking valid login.. start..");
+		if ((sessionMap.isEmpty()) || (sessionMap.get("empID") == null)
+				|| ((Integer) sessionMap.get("empID")) == 0) {
+			logger.info("ERROR: checking valid login..  failed..");
+			this.addActionError(getText("app.notloggedin.error"));
+			return "login";
+		} else {
+
+			HttpServletRequest request = (HttpServletRequest) ActionContext
+					.getContext().get(ServletActionContext.HTTP_REQUEST);
+			sessionMap.remove("result");
+			try {
+				res = rmMgr.deleteRole(Integer.parseInt(request
+						.getParameter("id")));
+			} catch (NumberFormatException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (ClassNotFoundException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (SQLException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			} catch (IOException e) {
+				logger.error("ERROR-" + e.getMessage());
+				e.printStackTrace();
+				this.addActionError(getText("app.error"));
+				return ERROR;
+			}
+			sessionMap.put("result", res);
+			return "admin";
+		}
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public void setRoleList(ArrayList<Role> roleList) {
+		this.roleList = roleList;
+	}
+
+	public ArrayList<Role> getRoleList() {
+		return roleList;
 	}
 
 }

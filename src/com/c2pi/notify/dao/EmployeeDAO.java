@@ -152,7 +152,7 @@ public class EmployeeDAO {
 		return emp;
 	}
 	
-	public String deleteTF(int tfID)
+	public String deleteEmp(int empID)
 			throws SQLException, ClassNotFoundException, IOException {
 		
 		query = "DELETE from `c2pidb`.`employees` where id=?";
@@ -160,7 +160,7 @@ public class EmployeeDAO {
 		conn = con.getConn();
 
 		pstmt = conn.prepareStatement(query);
-		pstmt.setInt(1, tfID);
+		pstmt.setInt(1, empID);
 		System.out.println("pstmt" + pstmt);
 
 		queryResult = pstmt.executeUpdate();

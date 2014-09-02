@@ -34,7 +34,8 @@ public class RoleMenuAction extends ActionSupport implements SessionAware,
 	private ArrayList<RoleMenu> roleMenuList= new ArrayList<RoleMenu>();
 	private RoleMenu roleMenu = new RoleMenu();
 	private RoleMenuManager rmManager=new RoleMenuManager();
-	private ArrayList<RoleMenu> roleMenuedit= new ArrayList<RoleMenu>();
+	//private ArrayList<RoleMenu> roleMenuedit= new ArrayList<RoleMenu>();
+	
 	Map<String, Object> sessionMap;
 
 	@Override
@@ -129,7 +130,7 @@ public String edit() {
 			try {
 				roleMenu = rmManager.getRoleMenuById(Integer.parseInt(request
 						.getParameter("id")));
-				roleMenuedit.add(roleMenu);
+				//roleMenuedit.add(roleMenu);
 			} catch (NumberFormatException e) {
 				logger.error("ERROR-" + e.getMessage());
 				e.printStackTrace();
@@ -150,6 +151,23 @@ public String edit() {
 				e.printStackTrace();
 				this.addActionError(getText("app.error"));
 				return ERROR;
+			}
+			
+try {
+				
+				
+	 rmManager=new RoleMenuManager();
+	
+				System.out
+						.println("EmployeeRoleManager get list of employee IDs method ..");
+				roleIDList = rmManager.getRoleId();
+				System.out.println("RoleManger get list of role IDs method ...");
+				menuIDList = rmManager.getMenuId();
+				System.out.println("MenuManager get list of menu IDs method ...");
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 			return "input";
@@ -267,13 +285,6 @@ public String delete() {
 		this.rmManager = rmManager;
 	}
 
-	public ArrayList<RoleMenu> getRoleMenuedit() {
-		return roleMenuedit;
-	}
-
-	public void setRoleMenuedit(ArrayList<RoleMenu> roleMenuedit) {
-		this.roleMenuedit = roleMenuedit;
-	}
-
+	
 	
 }
